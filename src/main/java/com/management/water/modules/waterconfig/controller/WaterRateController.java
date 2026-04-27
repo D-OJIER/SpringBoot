@@ -1,0 +1,26 @@
+package com.management.water.modules.waterconfig.controller;
+
+import com.management.water.modules.waterconfig.entity.WaterRate;
+import com.management.water.modules.waterconfig.service.WaterRateService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/water-rates")
+@RequiredArgsConstructor
+public class WaterRateController {
+
+    private final WaterRateService service;
+
+    @PostMapping
+    public WaterRate create(@RequestBody WaterRate rate) {
+        return service.create(rate);
+    }
+
+    @GetMapping
+    public List<WaterRate> getAll() {
+        return service.getAll();
+    }
+}
