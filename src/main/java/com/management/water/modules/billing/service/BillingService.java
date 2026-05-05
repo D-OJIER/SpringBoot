@@ -1,6 +1,8 @@
 package com.management.water.modules.billing.service;
 
 import com.management.water.modules.telemetry.entity.DailyLog;
+import com.management.water.modules.telemetry.entity.DailyLogSourceBreakdown;
+import com.management.water.modules.telemetry.repository.DailyLogSourceBreakdownRepository;
 import com.management.water.modules.waterconfig.entity.ApartmentSourceConfig;
 import com.management.water.modules.waterconfig.entity.WaterRate;
 import com.management.water.modules.waterconfig.repository.ApartmentSourceConfigRepository;
@@ -17,10 +19,18 @@ public class BillingService {
 
     private final ApartmentSourceConfigRepository configRepository;
     private final WaterRateRepository rateRepository;
+    private final DailyLogSourceBreakdownRepository breakdownRepository;
 
     public double calculateDailyCost(DailyLog log) {
 
         double totalCost = 0;
+
+        double allowance = calculateAllowance(log);
+
+        double totalLitres = log.getTotalLitresConsumed();
+
+        double normalUsage = Math.min(totalLitres, allowance);
+        double excessUsage = Math.max(0, totalLitres - allowance);
 
         List<ApartmentSourceConfig> configs =
                 configRepository.findByApartmentId(log.getApartment().getId());
@@ -29,20 +39,32 @@ public class BillingService {
 
             double ratio = config.getRatioPercent() / 100.0;
 
-            double litresForSource = log.getTotalLitresConsumed() * ratio;
+            double normalLitres = normalUsage * ratio;
+            double excessLitres = excessUsage * ratio;
 
-            double cost = calculateSlabCost(
-                    litresForSource,
-                    config.getSource().getId(),
-                    log.getLogDate()
-            );
+            Long sourceId = config.getSource().getId();
 
-            totalCost += cost;
+            double normalCost = calculateSlabCost(normalLitres, sourceId, log.getLogDate());
+
+            double excessCost = calculateSlabCost(excessLitres, sourceId, log.getLogDate()) * 1.5;
+
+            double totalSourceCost = normalCost + excessCost;
+
+            double totalSourceLitres = normalLitres + excessLitres;
+
+            totalCost += totalSourceCost;
+
+            DailyLogSourceBreakdown breakdown = new DailyLogSourceBreakdown();
+            breakdown.setDailyLog(log);
+            breakdown.setSource(config.getSource());
+            breakdown.setLitres(totalSourceLitres);
+            breakdown.setCost(totalSourceCost);
+
+            breakdownRepository.save(breakdown);
         }
 
         return totalCost;
     }
-
     private double calculateSlabCost(double litres, Long sourceId, LocalDate date) {
 
         List<WaterRate> rates =
@@ -75,5 +97,14 @@ public class BillingService {
         return cost;
     }
 
+    private double calculateAllowance(DailyLog log) {
 
+        int base = log.getApartment().getType().getBaseOccupancy();
+        int guests = log.getGuestCount();
+
+        double litresPerPerson =
+                log.getApartment().getType().getLitresPerPerson();
+
+        return (base + guests) * litresPerPerson;
+    }
 }
