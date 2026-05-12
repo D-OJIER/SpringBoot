@@ -59,9 +59,27 @@ public class WaterRateService {
     }
 
     public void deleteById(Long id) {
+
+        WaterRate rate =
+                rateRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Rate not found"
+                        ));
+
+        if (
+            rate.getEffectiveFrom()
+                .isBefore(java.time.LocalDate.now())
+        ) {
+
+            throw new RuntimeException(
+                    "Cannot delete historical rates"
+            );
+        }
+
         rateRepository.deleteById(id);
     }
-
+    
     public List<WaterRate> getAll() {
         return rateRepository.findAll();
     }
