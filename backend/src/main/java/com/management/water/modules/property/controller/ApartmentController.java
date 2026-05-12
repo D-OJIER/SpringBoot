@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/apartments")
 @RequiredArgsConstructor
@@ -22,5 +23,10 @@ public class ApartmentController {
     @GetMapping
     public List<Apartment> getAll() {
         return service.getAll();
+    }
+
+    @GetMapping
+    public List<Apartment> getAll() {
+        return repository.findAll();
     }
 }
