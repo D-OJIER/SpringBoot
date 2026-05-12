@@ -24,4 +24,9 @@ public class BlockController {
     public List<Block> getAll() {
         return service.getAll();
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id){
+        service.deleteById(id);
+    }
 }

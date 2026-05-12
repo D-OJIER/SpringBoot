@@ -20,4 +20,8 @@ public class BlockService {
     public List<Block> getAll() {
         return repository.findAll();
     }
+
+    public void deleteById(long id) {
+        repository.deleteById(id);
+    }
 }

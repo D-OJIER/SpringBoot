@@ -29,4 +29,10 @@ public class WaterRateController {
     public void delete(@PathVariable Long id) {
         service.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    public WaterRate update(@PathVariable Long id, @RequestBody WaterRate updated) {
+
+        return service.update(id, updated);
+    }
 }

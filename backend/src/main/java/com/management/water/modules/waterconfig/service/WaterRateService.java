@@ -65,4 +65,42 @@ public class WaterRateService {
     public List<WaterRate> getAll() {
         return rateRepository.findAll();
     }
+
+    public WaterRate update(Long id, WaterRate updated) {
+
+        WaterRate existing = rateRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rate not found"));
+
+        WaterSource source = sourceRepository.findById(updated.getSource().getId())
+                .orElseThrow(() -> new RuntimeException("WaterSource not found"));
+
+        if (updated.getMinLitres() > updated.getMaxLitres()) {
+            throw new RuntimeException("Invalid slab range");
+        }
+
+        List<WaterRate> rates =
+                rateRepository.findBySourceIdOrderByMinLitresAsc(source.getId());
+
+        for (WaterRate rate : rates) {
+
+            if (rate.getId().equals(id)) {
+                continue;
+            }
+
+            boolean overlap =
+                    updated.getMinLitres() <= rate.getMaxLitres()
+                    && updated.getMaxLitres() >= rate.getMinLitres();
+
+            if (overlap) {
+                throw new RuntimeException("Slab overlaps existing slabs");
+            }
+        }
+
+        existing.setMinLitres(updated.getMinLitres());
+        existing.setMaxLitres(updated.getMaxLitres());
+        existing.setRatePerLitre(updated.getRatePerLitre());
+        existing.setSource(source);
+
+        return rateRepository.save(existing);
+    }
 }
