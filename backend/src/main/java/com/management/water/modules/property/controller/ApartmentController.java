@@ -25,8 +25,4 @@ public class ApartmentController {
         return service.getAll();
     }
 
-    @GetMapping
-    public List<Apartment> getAll() {
-        return repository.findAll();
-    }
 }

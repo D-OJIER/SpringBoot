@@ -39,7 +39,6 @@ public class WaterRateService {
 
         if (rates.isEmpty()) return;
 
-        // ⚔️ Rule 1: Must start at 0
         if (rates.get(0).getMinLitres() != 0) {
             throw new RuntimeException("Slabs must start at 0");
         }
@@ -49,16 +48,18 @@ public class WaterRateService {
             WaterRate current = rates.get(i);
             WaterRate next = rates.get(i + 1);
 
-            // ⚔️ Rule 2: Continuity (no gaps)
             if (current.getMaxLitres() + 1 != next.getMinLitres()) {
                 throw new RuntimeException("Slabs are not continuous");
             }
 
-            // ⚔️ Rule 3: No overlap
             if (current.getMaxLitres() >= next.getMinLitres()) {
                 throw new RuntimeException("Slabs overlap");
             }
         }
+    }
+
+    public void deleteById(Long id) {
+        rateRepository.deleteById(id);
     }
 
     public List<WaterRate> getAll() {

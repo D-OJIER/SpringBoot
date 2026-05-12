@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/blocks")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class BlockController {
 
     private final BlockService service;

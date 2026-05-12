@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/water-rates")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class WaterRateController {
 
@@ -22,5 +23,10 @@ public class WaterRateController {
     @GetMapping
     public List<WaterRate> getAll() {
         return service.getAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteById(id);
     }
 }
