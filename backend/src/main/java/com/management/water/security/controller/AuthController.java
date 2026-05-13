@@ -1,8 +1,13 @@
 package com.management.water.security.controller;
 
 import com.management.water.security.dto.LoginRequest;
+import com.management.water.security.entity.User;
 import com.management.water.security.jwt.JwtService;
+import com.management.water.security.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
@@ -12,36 +17,49 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final JwtService jwtService;
+        private final UserRepository repository;
 
-    @PostMapping("/login")
-    public Map<String, String> login(
-            @RequestBody LoginRequest request
-    ) {
+        private final PasswordEncoder passwordEncoder;
+        private final JwtService jwtService;
 
-        if (
-            request.getUsername()
-                .equals("admin")
-
-            &&
-
-            request.getPassword()
-                .equals("admin123")
+        @PostMapping("/login")
+        public Map<String, String> login(
+                @RequestBody LoginRequest request
         ) {
 
-            String token =
-                    jwtService.generateToken(
-                            request.getUsername()
-                    );
+        User user =
+                repository.findByUsername(
+                        request.getUsername()
+                )
 
-            return Map.of(
-                    "token",
-                    token
-            );
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "User not found"
+                        ));
+
+        if (
+                !passwordEncoder.matches(
+                        request.getPassword(),
+                        user.getPassword()
+                )
+        ) {
+
+                throw new RuntimeException(
+                        "Invalid password"
+                );
         }
 
-        throw new RuntimeException(
-                "Invalid credentials"
+        String token =
+                jwtService.generateToken(
+                        user.getUsername(),
+                        user.getRole().name()
+                );
+
+        return Map.of(
+                "token",
+                token,
+                "role",
+                user.getRole().name()
         );
-    }
+        }
 }

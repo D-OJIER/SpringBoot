@@ -1,15 +1,19 @@
 package com.management.water.security.config;
 
 import com.management.water.modules.property.controller.ApartmentController;
-
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.management.water.security.jwt.JwtAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
@@ -21,21 +25,62 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain
-    securityFilterChain( HttpSecurity http ) throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(
-                    SessionCreationPolicy.STATELESS
-                )
-            ).authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-            ).addFilterBefore( jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors(cors -> {})
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(
+                        SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/**")
+                        .permitAll()
+
+                        .requestMatchers(
+                                "/monthly-summary/**")
+                        .hasAnyRole(
+                                "ADMIN",
+                                "MANAGER")
+
+                        .requestMatchers(
+                                "/water-rates/**",
+                                "/water-sources/**",
+                                "/apartments/**")
+                        .hasRole("ADMIN")
+
+                        .anyRequest()
+                        .authenticated())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOrigin(
+                "http://localhost:5173");
+
+        configuration.addAllowedMethod("*");
+
+        configuration.addAllowedHeader("*");
+
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration(
+                "/**",
+                configuration);
+
+        return source;
     }
 }
