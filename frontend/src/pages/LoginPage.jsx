@@ -34,7 +34,7 @@ function LoginPage() {
 
             console.error(error);
 
-            alert("Invalid credentials");
+            alert(error.response.data.message);
         }
     };
 
