@@ -31,38 +31,38 @@ function WaterSourcesPage() {
 
         <MainLayout>
 
-            <h1>Water Sources</h1>
+            <header className="page-header">
+                <h1 className="page-title">Water Sources</h1>
+            </header>
+
             <AddWaterSourceForm onSuccess={fetchSources} />
-            <h1>Available Sources</h1>
-            {sources.map(source => (
+            <TableContainer title="Available Sources">
+                <div className="list-grid">
+                    {sources.map(source => (
 
-                <div
-                    key={source.id}
-                    style={{
-                        backgroundColor: "#1b1b1b",
-                        padding: "15px",
-                        borderRadius: "12px",
-                        marginBottom: "10px",
-                        border: "1px solid #333"
-                    }}
-                >
+                        <div
+                            key={source.id}
+                            className="list-card"
+                        >
 
-                    <h2>{source.name}</h2>
+                            <h2 className="list-card__title">{source.name}</h2>
 
-                    <p>
-                        Pricing Type:
-                        {" "}
-                        {source.pricingType}
-                    </p>
+                            <p>
+                                Pricing Type:
+                                {" "}
+                                {source.pricingType}
+                            </p>
 
-                    <p>
-                        Supply Type:
-                        {" "}
-                        {source.supplyType}
-                    </p>
+                            <p>
+                                Supply Type:
+                                {" "}
+                                {source.supplyType}
+                            </p>
 
+                        </div>
+                    ))}
                 </div>
-            ))}
+            </TableContainer>
 
         </MainLayout>
     );

@@ -122,30 +122,29 @@ function WaterRatesPage() {
 
         <MainLayout>
 
-            <h1>Water Rates</h1>
+            <header className="page-header">
+                <h1 className="page-title">Water Rates</h1>
+            </header>
 
             <AddWaterRateForm onSuccess={fetchRates} />
 
             <TableContainer title="Water Rates">
 
-                <table style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}>
+                <table className="data-table">
 
                     <thead>
 
                         <tr>
 
-                            <th style={thStyle}>Source</th>
+                            <th>Source</th>
 
-                            <th style={thStyle}>Range</th>
+                            <th>Range</th>
 
-                            <th style={thStyle}>Rate</th>
+                            <th>Rate</th>
 
-                            <th style={thStyle}>Effective From</th>
+                            <th>Effective From</th>
 
-                            <th style={thStyle}>Actions</th>
+                            <th>Actions</th>
                         
                         </tr>
 
@@ -157,11 +156,11 @@ function WaterRatesPage() {
 
                             <tr key={rate.id}>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {rate.source.name}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
 
                                     {editingRateId === rate.id ? (
 
@@ -171,14 +170,14 @@ function WaterRatesPage() {
                                                 name="minLitres"
                                                 value={editForm.minLitres}
                                                 onChange={handleEditChange}
-                                                style={editInputStyle}
+                                                className="form-control form-control--small"
                                             />
 
                                             <input
                                                 name="maxLitres"
                                                 value={editForm.maxLitres}
                                                 onChange={handleEditChange}
-                                                style={editInputStyle}
+                                                className="form-control form-control--small"
                                             />
 
                                         </div>
@@ -195,7 +194,7 @@ function WaterRatesPage() {
 
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
 
                                     {editingRateId === rate.id ? (
 
@@ -203,7 +202,7 @@ function WaterRatesPage() {
                                             name="ratePerLitre"
                                             value={editForm.ratePerLitre}
                                             onChange={handleEditChange}
-                                            style={editInputStyle}
+                                            className="form-control form-control--small"
                                         />
 
                                     ) : (
@@ -214,16 +213,16 @@ function WaterRatesPage() {
 
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {rate.effectiveFrom}
                                 </td>
-                                <td style={tdStyle}>
+                                <td>
 
                                     {editingRateId === rate.id ? (
 
                                         <button
                                             onClick={() => saveEdit(rate)}
-                                            style={saveButtonStyle}
+                                            className="button button--success"
                                         >
                                             Save
                                         </button>
@@ -234,14 +233,14 @@ function WaterRatesPage() {
 
                                             <button
                                                 onClick={() => startEdit(rate)}
-                                                style={editButtonStyle}
+                                                className="button"
                                             >
                                                 Edit
                                             </button>
 
                                             <button
                                                 onClick={() => deleteRate(rate.id)}
-                                                style={deleteButtonStyle}
+                                                className="button button--danger"
                                             >
                                                 Delete
                                             </button>
@@ -267,52 +266,3 @@ function WaterRatesPage() {
 }
 
 export default WaterRatesPage;
-
-const thStyle = {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #333"
-};
-
-const tdStyle = {
-    padding: "12px",
-    borderBottom: "1px solid #222"
-};
-
-const deleteButtonStyle = {
-    backgroundColor: "#dc2626",
-    color: "white",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    cursor: "pointer"
-};
-
-const editButtonStyle = {
-    backgroundColor: "#2563eb",
-    color: "white",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    marginRight: "10px"
-};
-
-const saveButtonStyle = {
-    backgroundColor: "#16a34a",
-    color: "white",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    cursor: "pointer"
-};
-
-const editInputStyle = {
-    width: "80px",
-    padding: "6px",
-    marginRight: "5px",
-    backgroundColor: "#222",
-    color: "white",
-    border: "1px solid #444",
-    borderRadius: "6px"
-};

@@ -76,99 +76,76 @@ function AddDailyLogForm({ onSuccess }) {
 
         <form
             onSubmit={handleSubmit}
-            style={{
-                marginBottom: "20px",
-                padding: "20px",
-                border: "1px solid #333",
-                borderRadius: "12px",
-                backgroundColor: "#1b1b1b"
-            }}
+            className="form-panel"
         >
 
-            <h2>Add Daily Log</h2>
+            <h2 className="form-panel__title">Add Daily Log</h2>
 
-            <input
-                type="date"
-                name="logDate"
-                value={formData.logDate}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+            <div className="form-grid">
+                <input
+                    type="date"
+                    name="logDate"
+                    value={formData.logDate}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <input
-                type="number"
-                name="totalLitresConsumed"
-                placeholder="Total Litres"
-                value={formData.totalLitresConsumed}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+                <input
+                    type="number"
+                    name="totalLitresConsumed"
+                    placeholder="Total Litres"
+                    value={formData.totalLitresConsumed}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <input
-                type="number"
-                name="guestCount"
-                placeholder="Guest Count"
-                value={formData.guestCount}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+                <input
+                    type="number"
+                    name="guestCount"
+                    placeholder="Guest Count"
+                    value={formData.guestCount}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <select
-                name="apartmentId"
-                value={formData.apartmentId}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            >
+                <select
+                    name="apartmentId"
+                    value={formData.apartmentId}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                >
 
-                <option value="">
-                    Select Apartment
-                </option>
-
-                {apartments.map(apartment => (
-
-                    <option style={{ width: "100%" }}
-                        key={apartment.id}
-                        value={apartment.id}
-                    >
-                        {apartment.number}
+                    <option value="">
+                        Select Apartment
                     </option>
 
-                ))}
+                    {apartments.map(apartment => (
 
-            </select>
+                        <option
+                            key={apartment.id}
+                            value={apartment.id}
+                        >
+                            {apartment.number}
+                        </option>
 
-            <button
-                type="submit"
-                style={buttonStyle}
-            >
-                Add Log
-            </button>
+                    ))}
+
+                </select>
+
+                <button
+                    type="submit"
+                    className="button"
+                >
+                    Add Log
+                </button>
+            </div>
 
         </form>
     );
 }
-
-const inputStyle = {
-    width: "98%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
 
 export default AddDailyLogForm;

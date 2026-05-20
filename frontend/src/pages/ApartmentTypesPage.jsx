@@ -80,75 +80,76 @@ function ApartmentTypesPage() {
 
         <MainLayout>
 
-            <h1>Apartment Types</h1>
+            <header className="page-header">
+                <h1 className="page-title">Apartment Types</h1>
+            </header>
 
             <form
                 onSubmit={handleSubmit}
-                style={formStyle}
+                className="form-panel"
             >
 
-                <h2>Add Apartment Type</h2>
+                <h2 className="form-panel__title">Add Apartment Type</h2>
 
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Type Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
+                <div className="form-grid">
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Type Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    />
 
-                <input
-                    type="number"
-                    name="baseOccupancy"
-                    placeholder="Base Occupancy"
-                    value={formData.baseOccupancy}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
+                    <input
+                        type="number"
+                        name="baseOccupancy"
+                        placeholder="Base Occupancy"
+                        value={formData.baseOccupancy}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    />
 
-                <input
-                    type="number"
-                    step="0.01"
-                    name="litresPerPerson"
-                    placeholder="Litres Per Person"
-                    value={formData.litresPerPerson}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="litresPerPerson"
+                        placeholder="Litres Per Person"
+                        value={formData.litresPerPerson}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    />
 
-                <button
-                    type="submit"
-                    style={buttonStyle}
-                >
-                    Add Type
-                </button>
+                    <button
+                        type="submit"
+                        className="button"
+                    >
+                        Add Type
+                    </button>
+                </div>
 
             </form>
 
             <TableContainer title="Apartment Types">
 
-                <table style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}>
+                <table className="data-table">
 
                     <thead>
 
                         <tr>
 
-                            <th style={thStyle}>
+                            <th>
                                 Name
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Occupancy
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Litres / Person
                             </th>
 
@@ -162,15 +163,15 @@ function ApartmentTypesPage() {
 
                             <tr key={type.id}>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {type.name}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {type.baseOccupancy}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {type.litresPerPerson}
                                 </td>
 
@@ -187,43 +188,5 @@ function ApartmentTypesPage() {
         </MainLayout>
     );
 }
-
-const formStyle = {
-    backgroundColor: "#1b1b1b",
-    padding: "20px",
-    borderRadius: "16px",
-    marginBottom: "20px",
-    border: "1px solid #333"
-};
-
-const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
-
-const thStyle = {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #333"
-};
-
-const tdStyle = {
-    padding: "12px",
-    borderBottom: "1px solid #222"
-};
 
 export default ApartmentTypesPage;

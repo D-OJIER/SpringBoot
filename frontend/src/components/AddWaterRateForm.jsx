@@ -95,119 +95,96 @@ function AddWaterRateForm({ onSuccess }) {
 
         <form
             onSubmit={handleSubmit}
-            style={{
-                backgroundColor: "#1b1b1b",
-                padding: "20px",
-                borderRadius: "16px",
-                marginBottom: "20px",
-                border: "1px solid #333"
-            }}
+            className="form-panel"
         >
 
-            <h2>Add Water Rate</h2>
+            <h2 className="form-panel__title">Add Water Rate</h2>
 
-            <input
-                type="number"
-                name="minLitres"
-                placeholder="Min Litres"
-                value={formData.minLitres}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+            <div className="form-grid">
+                <input
+                    type="number"
+                    name="minLitres"
+                    placeholder="Min Litres"
+                    value={formData.minLitres}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <input
-                type="number"
-                name="maxLitres"
-                placeholder="Max Litres"
-                value={formData.maxLitres}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+                <input
+                    type="number"
+                    name="maxLitres"
+                    placeholder="Max Litres"
+                    value={formData.maxLitres}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <input
-                type="number"
-                step="0.01"
-                name="ratePerLitre"
-                placeholder="Rate Per Litre"
-                value={formData.ratePerLitre}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+                <input
+                    type="number"
+                    step="0.01"
+                    name="ratePerLitre"
+                    placeholder="Rate Per Litre"
+                    value={formData.ratePerLitre}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <input
-                type="date"
-                name="effectiveFrom"
-                value={formData.effectiveFrom}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+                <input
+                    type="date"
+                    name="effectiveFrom"
+                    value={formData.effectiveFrom}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <input
-                type="date"
-                name="effectiveTo"
-                value={formData.effectiveTo}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+                <input
+                    type="date"
+                    name="effectiveTo"
+                    value={formData.effectiveTo}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <select
-                name="sourceId"
-                value={formData.sourceId}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            >
+                <select
+                    name="sourceId"
+                    value={formData.sourceId}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                >
 
-                <option value="">
-                    Select Source
-                </option>
-
-                {sources.map(source => (
-
-                    <option
-                        key={source.id}
-                        value={source.id}
-                    >
-                        {source.name}
+                    <option value="">
+                        Select Source
                     </option>
 
-                ))}
+                    {sources.map(source => (
 
-            </select>
+                        <option
+                            key={source.id}
+                            value={source.id}
+                        >
+                            {source.name}
+                        </option>
 
-            <button
-                type="submit"
-                style={buttonStyle}
-            >
-                Add Rate
-            </button>
+                    ))}
+
+                </select>
+
+                <button
+                    type="submit"
+                    className="button"
+                >
+                    Add Rate
+                </button>
+            </div>
 
         </form>
     );
 }
-
-const inputStyle = {
-    width: "98%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
 
 export default AddWaterRateForm;

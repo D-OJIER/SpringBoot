@@ -12,15 +12,9 @@ function UsageChart({ data }) {
 
     return (
 
-        <div style={{
-            backgroundColor: "#1b1b1b",
-            padding: "20px",
-            borderRadius: "16px",
-            marginTop: "30px",
-            border: "1px solid #333"
-        }}>
+        <div className="chart-panel">
 
-            <h2>Usage Trend</h2>
+            <h2 className="chart-panel__title">Usage Trend</h2>
 
             <ResponsiveContainer
                 width="100%"
@@ -29,18 +23,19 @@ function UsageChart({ data }) {
 
                 <LineChart data={data}>
 
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#d9e4ef" />
 
-                    <XAxis dataKey="logDate" />
+                    <XAxis dataKey="logDate" stroke="#617089" />
 
-                    <YAxis />
+                    <YAxis stroke="#617089" />
 
                     <Tooltip />
 
                     <Line
                         type="monotone"
                         dataKey="totalLitresConsumed"
-                        stroke="#2563eb"
+                        stroke="#0e7490"
+                        strokeWidth={3}
                     />
 
                 </LineChart>

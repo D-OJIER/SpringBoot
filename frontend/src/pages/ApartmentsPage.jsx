@@ -32,34 +32,33 @@ function ApartmentsPage() {
 
         <MainLayout>
 
-            <h1>Apartments</h1>
+            <header className="page-header">
+                <h1 className="page-title">Apartments</h1>
+            </header>
 
             <AddApartmentForm onSuccess={fetchApartments} />
 
             <TableContainer title="Apartment List">
 
-                <table style={{
-                    width: "90%",
-                    borderCollapse: "collapse"
-                }}>
+                <table className="data-table">
 
                     <thead>
 
                         <tr>
 
-                            <th style={thStyle}>
+                            <th>
                                 Number
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Block
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Type
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Occupancy
                             </th>
 
@@ -73,19 +72,19 @@ function ApartmentsPage() {
 
                             <tr key={apartment.id}>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {apartment.number}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {apartment.block.name}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {apartment.type.name}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {
                                         apartment.type
                                             .baseOccupancy
@@ -105,16 +104,5 @@ function ApartmentsPage() {
         </MainLayout>
     );
 }
-
-const thStyle = {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #333"
-};
-
-const tdStyle = {
-    padding: "12px",
-    borderBottom: "1px solid #222"
-};
 
 export default ApartmentsPage;

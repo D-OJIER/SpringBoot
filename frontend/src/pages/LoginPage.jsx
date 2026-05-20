@@ -40,28 +40,14 @@ function LoginPage() {
 
     return (
 
-        <div style={{
-            minHeight: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#111"
-        }}>
+        <div className="login-page">
 
             <form
                 onSubmit={handleLogin}
-                style={{
-                    backgroundColor: "#1b1b1b",
-                    padding: "30px",
-                    borderRadius: "16px",
-                    width: "350px"
-                }}
+                className="card login-card"
             >
 
-                <h1 style={{
-                    color: "white",
-                    marginBottom: "20px"
-                }}>
+                <h1 className="login-title">
                     Login
                 </h1>
 
@@ -73,7 +59,7 @@ function LoginPage() {
                         setUsername(e.target.value)
                     }
                     required
-                    style={inputStyle}
+                    className="form-control"
                 />
 
                 <input
@@ -84,12 +70,12 @@ function LoginPage() {
                         setPassword(e.target.value)
                     }
                     required
-                    style={inputStyle}
+                    className="form-control"
                 />
 
                 <button
                     type="submit"
-                    style={buttonStyle}
+                    className="button"
                 >
                     Login
                 </button>
@@ -99,25 +85,5 @@ function LoginPage() {
         </div>
     );
 }
-
-const inputStyle = {
-    width: "100%",
-    padding: "12px",
-    marginBottom: "12px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
 
 export default LoginPage;

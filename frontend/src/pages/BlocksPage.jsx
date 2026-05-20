@@ -78,51 +78,52 @@ function BlocksPage() {
 
         <MainLayout>
 
-            <h1>Blocks</h1>
+            <header className="page-header">
+                <h1 className="page-title">Blocks</h1>
+            </header>
 
             <form
                 onSubmit={addBlock}
-                style={formStyle}
+                className="form-panel"
             >
 
-                <h2>Add Block</h2>
+                <h2 className="form-panel__title">Add Block</h2>
 
-                <input
-                    type="text"
-                    placeholder="Block Name"
-                    value={name}
-                    onChange={(e) =>
-                        setName(e.target.value)
-                    }
-                    required
-                    style={inputStyle}
-                />
+                <div className="form-grid">
+                    <input
+                        type="text"
+                        placeholder="Block Name"
+                        value={name}
+                        onChange={(e) =>
+                            setName(e.target.value)
+                        }
+                        required
+                        className="form-control"
+                    />
 
-                <button
-                    type="submit"
-                    style={buttonStyle}
-                >
-                    Add Block
-                </button>
+                    <button
+                        type="submit"
+                        className="button"
+                    >
+                        Add Block
+                    </button>
+                </div>
 
             </form>
 
             <TableContainer title="Blocks">
 
-                <table style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}>
+                <table className="data-table">
 
                     <thead>
 
                         <tr>
 
-                            <th style={thStyle}>
+                            <th>
                                 Name
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Actions
                             </th>
 
@@ -136,17 +137,17 @@ function BlocksPage() {
 
                             <tr key={block.id}>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {block.name}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
 
                                     <button
                                         onClick={() =>
                                             deleteBlock(block.id)
                                         }
-                                        style={deleteButtonStyle}
+                                        className="button button--danger"
                                     >
                                         Delete
                                     </button>
@@ -166,52 +167,5 @@ function BlocksPage() {
         </MainLayout>
     );
 }
-
-const formStyle = {
-    backgroundColor: "#1b1b1b",
-    padding: "20px",
-    borderRadius: "16px",
-    marginBottom: "20px",
-    border: "1px solid #333"
-};
-
-const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
-
-const deleteButtonStyle = {
-    backgroundColor: "#dc2626",
-    color: "white",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "8px",
-    cursor: "pointer"
-};
-
-const thStyle = {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #333"
-};
-
-const tdStyle = {
-    padding: "12px",
-    borderBottom: "1px solid #222"
-};
 
 export default BlocksPage;

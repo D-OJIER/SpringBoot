@@ -55,35 +55,32 @@ function DashboardPage() {
 
         <MainLayout>
 
-            <h1>Dashboard</h1>
+            <header className="page-header">
+                <h1 className="page-title">Dashboard</h1>
+            </header>
 
-            <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "20px",
-                marginTop: "20px"
-            }}>
+            <div className="stats-grid">
 
-                <div style={cardStyle}>
-                    <h2>Total Logs</h2>
+                <div className="card">
+                    <h2 className="card__title">Total Logs</h2>
 
-                    <p style={numberStyle}>
+                    <p className="card__value">
                         {stats.totalLogs}
                     </p>
                 </div>
 
-                <div style={cardStyle}>
-                    <h2>Total Usage</h2>
+                <div className="card">
+                    <h2 className="card__title">Total Usage</h2>
 
-                    <p style={numberStyle}>
+                    <p className="card__value">
                         {stats.totalUsage} L
                     </p>
                 </div>
 
-                <div style={cardStyle}>
-                    <h2>Total Cost</h2>
+                <div className="card">
+                    <h2 className="card__title">Total Cost</h2>
 
-                    <p style={numberStyle}>
+                    <p className="card__value">
                         ₹{stats.totalCost}
                     </p>
                 </div>
@@ -95,17 +92,5 @@ function DashboardPage() {
         </MainLayout>
     );
 }
-
-const cardStyle = {
-    backgroundColor: "#1b1b1b",
-    padding: "20px",
-    borderRadius: "16px",
-    border: "1px solid #333"
-};
-
-const numberStyle = {
-    fontSize: "2rem",
-    fontWeight: "bold"
-};
 
 export default DashboardPage;

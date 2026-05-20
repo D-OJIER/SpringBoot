@@ -100,105 +100,82 @@ function AddApartmentForm({ onSuccess }) {
 
         <form
             onSubmit={handleSubmit}
-            style={{
-                backgroundColor: "#1b1b1b",
-                padding: "20px",
-                borderRadius: "16px",
-                marginBottom: "20px",
-                border: "1px solid #333"
-            }}
+            className="form-panel"
         >
 
-            <h2>Add Apartment</h2>
+            <h2 className="form-panel__title">Add Apartment</h2>
 
-            <input
-                type="text"
-                name="number"
-                placeholder="Apartment Number"
-                value={formData.number}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+            <div className="form-grid">
+                <input
+                    type="text"
+                    name="number"
+                    placeholder="Apartment Number"
+                    value={formData.number}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <select
-                name="blockId"
-                value={formData.blockId}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            >
+                <select
+                    name="blockId"
+                    value={formData.blockId}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                >
 
-                <option value="">
-                    Select Block
-                </option>
-
-                {blocks.map(block => (
-
-                    <option
-                        key={block.id}
-                        value={block.id}
-                    >
-                        {block.name}
+                    <option value="">
+                        Select Block
                     </option>
 
-                ))}
+                    {blocks.map(block => (
 
-            </select>
+                        <option
+                            key={block.id}
+                            value={block.id}
+                        >
+                            {block.name}
+                        </option>
 
-            <select
-                name="typeId"
-                value={formData.typeId}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            >
+                    ))}
 
-                <option value="">
-                    Select Type
-                </option>
+                </select>
 
-                {types.map(type => (
+                <select
+                    name="typeId"
+                    value={formData.typeId}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                >
 
-                    <option
-                        key={type.id}
-                        value={type.id}
-                    >
-                        {type.name}
+                    <option value="">
+                        Select Type
                     </option>
 
-                ))}
+                    {types.map(type => (
 
-            </select>
+                        <option
+                            key={type.id}
+                            value={type.id}
+                        >
+                            {type.name}
+                        </option>
 
-            <button
-                type="submit"
-                style={buttonStyle}
-            >
-                Add Apartment
-            </button>
+                    ))}
+
+                </select>
+
+                <button
+                    type="submit"
+                    className="button"
+                >
+                    Add Apartment
+                </button>
+            </div>
 
         </form>
     );
 }
-
-const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
 
 export default AddApartmentForm;

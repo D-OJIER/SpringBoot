@@ -50,89 +50,66 @@ function AddWaterSourceForm({ onSuccess }) {
 
         <form
             onSubmit={handleSubmit}
-            style={{
-                backgroundColor: "#1b1b1b",
-                padding: "20px",
-                borderRadius: "16px",
-                marginBottom: "20px",
-                border: "1px solid #333"
-            }}
+            className="form-panel"
         >
 
-            <h2>Add Water Source</h2>
+            <h2 className="form-panel__title">Add Water Source</h2>
 
-            <input
-                type="text"
-                name="name"
-                placeholder="Source Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-            />
+            <div className="form-grid">
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Source Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="form-control"
+                />
 
-            <select
-                name="pricingType"
-                value={formData.pricingType}
-                onChange={handleChange}
-                style={inputStyle}
-            >
+                <select
+                    name="pricingType"
+                    value={formData.pricingType}
+                    onChange={handleChange}
+                    className="form-control"
+                >
 
-                <option value="SLAB">
-                    SLAB
-                </option>
+                    <option value="SLAB">
+                        SLAB
+                    </option>
 
-            </select>
+                </select>
 
-            <select
-                name="supplyType"
-                value={formData.supplyType}
-                onChange={handleChange}
-                style={inputStyle}
-            >
+                <select
+                    name="supplyType"
+                    value={formData.supplyType}
+                    onChange={handleChange}
+                    className="form-control"
+                >
 
-                <option value="MUNICIPAL">
-                    MUNICIPAL
-                </option>
+                    <option value="MUNICIPAL">
+                        MUNICIPAL
+                    </option>
 
-                <option value="PRIVATE">
-                    PRIVATE
-                </option>
+                    <option value="PRIVATE">
+                        PRIVATE
+                    </option>
 
-                <option value="GROUND">
-                    GROUND
-                </option>
+                    <option value="GROUND">
+                        GROUND
+                    </option>
 
-            </select>
+                </select>
 
-            <button
-                type="submit"
-                style={buttonStyle}
-            >
-                Add Source
-            </button>
+                <button
+                    type="submit"
+                    className="button"
+                >
+                    Add Source
+                </button>
+            </div>
 
         </form>
     );
 }
-
-const inputStyle = {
-    width: "98%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
 
 export default AddWaterSourceForm;

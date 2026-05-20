@@ -7,7 +7,6 @@ import {
     Receipt,
     Blocks,
     Settings2,
-    BarChartBigIcon,
     Building2,
     BarChartIcon
 } from "lucide-react";
@@ -22,69 +21,60 @@ function Sidebar() {
     };
 
     return (
-        <div style={{
-            width: "250px",
-            backgroundColor: "#1a1a1a",
-            padding: "20px",
-            borderRight: "1px solid #333"
-        }}>
-            <h2 style={{ marginBottom: "30px" }}>
+        <div className="sidebar">
+            <h2 className="sidebar__brand">
                 Water System
             </h2>
 
-            <nav style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "15px"
-            }}>
+            <nav className="sidebar__nav">
 
-                <Link to="/dashboard" style={linkStyle}>
+                <Link to="/dashboard" className="sidebar__link">
                     <LayoutDashboard size={18} />
                     Dashboard
                 </Link>
 
-                <Link to="/logs" style={linkStyle}>
+                <Link to="/logs" className="sidebar__link">
                     <FileText size={18} />
                     Daily Logs
                 </Link>
 
-                <Link to="/sources" style={linkStyle}>
+                <Link to="/sources" className="sidebar__link">
                     <Droplets size={18} />
                     Water Sources
                 </Link>
 
-                <Link to="/rates" style={linkStyle}>
+                <Link to="/rates" className="sidebar__link">
                     <Receipt size={18} />
                     Water Rates
                 </Link>
 
-                <Link to="/apartments" style={linkStyle}>
+                <Link to="/apartments" className="sidebar__link">
                     <Building2 size={18} />
                     Apartments
                 </Link>
 
-                <Link to="/apartment-types" style={linkStyle}>
+                <Link to="/apartment-types" className="sidebar__link">
                     <Home size={18} />
                     Apartment Types
                 </Link>
 
-                <Link to="/blocks" style={linkStyle}>
+                <Link to="/blocks" className="sidebar__link">
                     <Blocks size={18} />
                     Blocks
                 </Link>
 
-                <Link to="/source-configs" style={linkStyle}>
+                <Link to="/source-configs" className="sidebar__link">
                     <Settings2 size={18} />
                     Source Configs
                 </Link>
 
-                <Link to="/monthly-summary" style={linkStyle}>
+                <Link to="/monthly-summary" className="sidebar__link">
                     <BarChartIcon size={18} />
                     Reports
                 </Link>
                 <button
                     onClick={logout}
-                    style={logoutButtonStyle}
+                    className="button button--danger sidebar__logout"
                 >
                     Logout
                 </button>
@@ -92,24 +82,5 @@ function Sidebar() {
         </div>
     );
 }
-
-const linkStyle = {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    color: "white",
-    textDecoration: "none",
-    padding: "10px",
-    borderRadius: "8px",
-    backgroundColor: "#222"
-};
-const logoutButtonStyle = {
-    backgroundColor: "#dc2626",
-    color: "white",
-    border: "none",
-    padding: "10px 14px",
-    borderRadius: "8px",
-    cursor: "pointer"
-};
 
 export default Sidebar;

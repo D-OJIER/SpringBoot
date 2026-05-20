@@ -33,28 +33,27 @@ function MonthlySummaryPage() {
 
         <MainLayout>
 
-            <h1>Monthly Summary</h1>
+            <header className="page-header">
+                <h1 className="page-title">Monthly Summary</h1>
+            </header>
 
             <TableContainer title="Billing Summary">
 
-                <table style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}>
+                <table className="data-table">
 
                     <thead>
 
                         <tr>
 
-                            <th style={thStyle}>
+                            <th>
                                 Apartment
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Total Usage
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Total Cost
                             </th>
 
@@ -68,15 +67,15 @@ function MonthlySummaryPage() {
 
                             <tr key={index}>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {item.apartment}
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {item.totalUsage} L
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     ₹{item.totalCost}
                                 </td>
 
@@ -93,16 +92,5 @@ function MonthlySummaryPage() {
         </MainLayout>
     );
 }
-
-const thStyle = {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #333"
-};
-
-const tdStyle = {
-    padding: "12px",
-    borderBottom: "1px solid #222"
-};
 
 export default MonthlySummaryPage;

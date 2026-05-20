@@ -29,43 +29,42 @@ function DailyLogsPage() {
 
     return (
         <MainLayout>
+            <header className="page-header">
+                <h1 className="page-title">Daily Logs</h1>
+            </header>
+
             <AddDailyLogForm onSuccess={fetchLogs} />
-            <h1>Daily Logs</h1>
 
             {logs.length === 0 && (
-                <p>No logs found</p>
+                <p className="empty-state">No logs found</p>
             )}
 
-            {logs.map(log => (
+            <div className="list-grid">
+                {logs.map(log => (
 
-                <div
-                    key={log.id}
-                    style={{
-                        border: "1px solid #333",
-                        borderRadius: "12px",
-                        padding: "15px",
-                        marginBottom: "10px",
-                        backgroundColor: "#1b1b1b"
-                    }}
-                >
-                    <h2>{log.apartment.number}</h2>
+                    <div
+                        key={log.id}
+                        className="list-card"
+                    >
+                        <h2 className="list-card__title">{log.apartment.number}</h2>
 
-                    <p>Date: {log.logDate}</p>
+                        <p>Date: {log.logDate}</p>
 
-                    <p>
-                        Usage: {log.totalLitresConsumed} L
-                    </p>
+                        <p>
+                            Usage: {log.totalLitresConsumed} L
+                        </p>
 
-                    <p>
-                        Guests: {log.guestCount}
-                    </p>
+                        <p>
+                            Guests: {log.guestCount}
+                        </p>
 
-                    <p>
-                        Cost: ₹{log.dayCost}
-                    </p>
+                        <p>
+                            Cost: ₹{log.dayCost}
+                        </p>
 
-                </div>
-            ))}
+                    </div>
+                ))}
+            </div>
 
         </MainLayout>
     );

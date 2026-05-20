@@ -131,104 +131,105 @@ function SourceConfigsPage() {
 
         <MainLayout>
 
-            <h1>Source Configurations</h1>
+            <header className="page-header">
+                <h1 className="page-title">Source Configurations</h1>
+            </header>
 
             <form
                 onSubmit={handleSubmit}
-                style={formStyle}
+                className="form-panel"
             >
 
-                <h2>Add Configuration</h2>
+                <h2 className="form-panel__title">Add Configuration</h2>
 
-                <select
-                    name="apartmentId"
-                    value={formData.apartmentId}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                >
+                <div className="form-grid">
+                    <select
+                        name="apartmentId"
+                        value={formData.apartmentId}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    >
 
-                    <option value="">
-                        Select Apartment
-                    </option>
-
-                    {apartments.map(apartment => (
-
-                        <option
-                            key={apartment.id}
-                            value={apartment.id}
-                        >
-                            {apartment.number}
+                        <option value="">
+                            Select Apartment
                         </option>
 
-                    ))}
+                        {apartments.map(apartment => (
 
-                </select>
+                            <option
+                                key={apartment.id}
+                                value={apartment.id}
+                            >
+                                {apartment.number}
+                            </option>
 
-                <select
-                    name="sourceId"
-                    value={formData.sourceId}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                >
+                        ))}
 
-                    <option value="">
-                        Select Source
-                    </option>
+                    </select>
 
-                    {sources.map(source => (
+                    <select
+                        name="sourceId"
+                        value={formData.sourceId}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    >
 
-                        <option
-                            key={source.id}
-                            value={source.id}
-                        >
-                            {source.name}
+                        <option value="">
+                            Select Source
                         </option>
 
-                    ))}
+                        {sources.map(source => (
 
-                </select>
+                            <option
+                                key={source.id}
+                                value={source.id}
+                            >
+                                {source.name}
+                            </option>
 
-                <input
-                    type="number"
-                    name="ratioPercent"
-                    placeholder="Ratio %"
-                    value={formData.ratioPercent}
-                    onChange={handleChange}
-                    required
-                    style={inputStyle}
-                />
+                        ))}
 
-                <button
-                    type="submit"
-                    style={buttonStyle}
-                >
-                    Add Config
-                </button>
+                    </select>
+
+                    <input
+                        type="number"
+                        name="ratioPercent"
+                        placeholder="Ratio %"
+                        value={formData.ratioPercent}
+                        onChange={handleChange}
+                        required
+                        className="form-control"
+                    />
+
+                    <button
+                        type="submit"
+                        className="button"
+                    >
+                        Add Config
+                    </button>
+                </div>
 
             </form>
 
             <TableContainer title="Source Configurations">
 
-                <table style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}>
+                <table className="data-table">
 
                     <thead>
 
                         <tr>
 
-                            <th style={thStyle}>
+                            <th>
                                 Apartment
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Source
                             </th>
 
-                            <th style={thStyle}>
+                            <th>
                                 Ratio %
                             </th>
 
@@ -242,21 +243,21 @@ function SourceConfigsPage() {
 
                             <tr key={config.id}>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {
                                         config.apartment
                                             .number
                                     }
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {
                                         config.source
                                             .name
                                     }
                                 </td>
 
-                                <td style={tdStyle}>
+                                <td>
                                     {
                                         config.ratioPercent
                                     }%
@@ -275,43 +276,5 @@ function SourceConfigsPage() {
         </MainLayout>
     );
 }
-
-const formStyle = {
-    backgroundColor: "#1b1b1b",
-    padding: "20px",
-    borderRadius: "16px",
-    marginBottom: "20px",
-    border: "1px solid #333"
-};
-
-const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    border: "1px solid #444",
-    backgroundColor: "#222",
-    color: "white"
-};
-
-const buttonStyle = {
-    padding: "10px 20px",
-    borderRadius: "8px",
-    border: "none",
-    backgroundColor: "#2563eb",
-    color: "white",
-    cursor: "pointer"
-};
-
-const thStyle = {
-    textAlign: "left",
-    padding: "12px",
-    borderBottom: "1px solid #333"
-};
-
-const tdStyle = {
-    padding: "12px",
-    borderBottom: "1px solid #222"
-};
 
 export default SourceConfigsPage;

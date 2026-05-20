@@ -2,21 +2,15 @@ function TableContainer({ title, children }) {
 
     return (
 
-        <div style={{
-            backgroundColor: "#1b1b1b",
-            borderRadius: "16px",
-            padding: "20px",
-            border: "1px solid #333",
-            marginTop: "20px"
-        }}>
+        <div className="table-panel">
 
-            <h2 style={{
-                marginBottom: "20px"
-            }}>
+            <h2 className="table-panel__title">
                 {title}
             </h2>
 
-            {children}
+            <div className="table-scroll">
+                {children}
+            </div>
 
         </div>
     );
