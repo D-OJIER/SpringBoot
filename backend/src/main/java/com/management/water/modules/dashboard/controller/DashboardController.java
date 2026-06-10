@@ -11,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/dashboard")
-@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class DashboardController {
 

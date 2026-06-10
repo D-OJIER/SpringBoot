@@ -9,7 +9,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/monthly-summary")
-@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class MonthlySummaryController {
 
