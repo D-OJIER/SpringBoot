@@ -5,11 +5,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Value;
+
 
 @Service
 public class JwtService {
 
-    private final String SECRET = "theSecretKeyisNotSoSecret1234567890abcdefghijklmnopqrstuvwxyz";
+    @Value("${jwt.secret}")
+    private String SECRET;
 
     public String extractRole(String token) {
 

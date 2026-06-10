@@ -2,51 +2,43 @@ package com.management.water.security.config;
 
 import com.management.water.security.entity.Role;
 import com.management.water.security.entity.User;
-import com.management.water.security.repository
-        .UserRepository;
+import com.management.water.security.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.boot.CommandLineRunner;
-
-import org.springframework.security.crypto
-        .password.PasswordEncoder;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class DataInitializer
-implements CommandLineRunner {
+                implements CommandLineRunner {
 
-    private final UserRepository
-            repository;
+        private final UserRepository repository;
 
-    private final PasswordEncoder
-            passwordEncoder;
+        private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public void run(String... args) {
+        @Value("${admin.username}")
+        private String adminUsername;
 
-        if (
-            repository.findByUsername(
-                    "admin"
-            ).isEmpty()
-        ) {
+        @Value("${admin.password}")
+        private String adminPassword;
 
-            User admin = new User();
+        @Override
+        public void run(String... args) {
 
-            admin.setUsername("admin");
+                if (repository.findByUsername(
+                                adminUsername).isEmpty()) {
 
-            admin.setPassword(
-                    passwordEncoder.encode(
-                            "admin123"
-                    )
-            );
+                        User admin = new User();
 
-            admin.setRole(Role.ADMIN);
+                        admin.setUsername(adminUsername);
+                        admin.setPassword(passwordEncoder.encode(adminPassword));
 
-            repository.save(admin);
+                        admin.setRole(Role.ADMIN);
+
+                        repository.save(admin);
+                }
         }
-    }
 }
