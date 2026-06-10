@@ -1,7 +1,5 @@
 package com.management.water.security.config;
 
-import com.management.water.modules.property.controller.ApartmentController;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.management.water.security.jwt.JwtAuthenticationFilter;
@@ -18,69 +16,70 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtFilter;
+        private final JwtAuthenticationFilter jwtFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
+        public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
+                this.jwtFilter = jwtFilter;
+        }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        
-        http
-                .cors(cors -> {})
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(
-                        SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/auth/**")
-                        .permitAll()
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-                        .requestMatchers(
-                                "/monthly-summary/**")
-                        .hasAnyRole(
-                                "ADMIN",
-                                "MANAGER")
+                http
+                                .cors(cors -> cors.configurationSource(
+                                                corsConfigurationSource()))
+                                .csrf(csrf -> csrf.disable())
+                                .sessionManagement(session -> session.sessionCreationPolicy(
+                                                SessionCreationPolicy.STATELESS))
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers(
+                                                                "/auth/**")
+                                                .permitAll()
 
-                        .requestMatchers(
-                                "/water-rates/**",
-                                "/water-sources/**",
-                                "/apartments/**")
-                        .hasRole("ADMIN")
+                                                .requestMatchers(
+                                                                "/monthly-summary/**")
+                                                .hasAnyRole(
+                                                                "ADMIN",
+                                                                "MANAGER")
 
-                        .anyRequest()
-                        .authenticated())
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+                                                .requestMatchers(
+                                                                "/water-rates/**",
+                                                                "/water-sources/**",
+                                                                "/apartments/**")
+                                                .hasRole("ADMIN")
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
+                                                .anyRequest()
+                                                .authenticated())
+                                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                return http.build();
+        }
 
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+                return new BCryptPasswordEncoder();
+        }
 
-        CorsConfiguration configuration = new CorsConfiguration();
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
 
-        configuration.addAllowedOrigin(
-                "http://localhost:5173");
+                CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedMethod("*");
+                configuration.addAllowedOrigin(
+                                "http://localhost:5173");
 
-        configuration.addAllowedHeader("*");
+                configuration.setAllowedMethods(
+                                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                configuration.addAllowedHeader("*");
 
-        configuration.setAllowCredentials(true);
+                configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration(
-                "/**",
-                configuration);
+                source.registerCorsConfiguration(
+                                "/**",
+                                configuration);
 
-        return source;
-    }
+                return source;
+        }
 }
