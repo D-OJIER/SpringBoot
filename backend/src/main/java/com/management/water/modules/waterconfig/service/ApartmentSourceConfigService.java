@@ -8,6 +8,8 @@ import com.management.water.modules.waterconfig.repository.ApartmentSourceConfig
 import com.management.water.modules.waterconfig.repository.WaterSourceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.management.water.modules.common.exception.ApiException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -22,10 +24,10 @@ public class ApartmentSourceConfigService {
     public ApartmentSourceConfig create(ApartmentSourceConfig config) {
 
         Apartment apartment = apartmentRepository.findById(config.getApartment().getId())
-                .orElseThrow(() -> new RuntimeException("Apartment not found"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Apartment not found"));
 
         WaterSource source = sourceRepository.findById(config.getSource().getId())
-                .orElseThrow(() -> new RuntimeException("WaterSource not found"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "WaterSource not found"));
 
         boolean exists = repository.existsByApartmentIdAndSourceId(
                 apartment.getId(),
@@ -33,11 +35,11 @@ public class ApartmentSourceConfigService {
         );
 
         if (exists) {
-            throw new RuntimeException("Source already configured for this apartment");
+            throw new ApiException(HttpStatus.CONFLICT, "Source already configured for this apartment");
         }
 
         if (config.getRatioPercent() <= 0 || config.getRatioPercent() > 100) {
-            throw new RuntimeException("Invalid ratio value");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid ratio value");
         }
 
         List<ApartmentSourceConfig> existingConfigs =
@@ -50,7 +52,7 @@ public class ApartmentSourceConfigService {
         double newTotal = currentTotal + config.getRatioPercent();
 
         if (newTotal > 100) {
-            throw new RuntimeException("Total ratio exceeds 100%");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Total ratio exceeds 100%");
         }
 
         config.setApartment(apartment);
