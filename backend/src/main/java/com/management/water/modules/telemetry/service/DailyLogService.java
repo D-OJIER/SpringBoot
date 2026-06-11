@@ -11,6 +11,8 @@ import com.management.water.modules.telemetry.repository.DailyLogRepository;
 import com.management.water.modules.telemetry.repository.DailyLogSourceBreakdownRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.management.water.modules.common.exception.ApiException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class DailyLogService {
     public DailyLog create(DailyLog log) {
 
         Apartment apartment = apartmentRepository.findById(log.getApartment().getId())
-                .orElseThrow(() -> new RuntimeException("Apartment not found"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Apartment not found"));
 
         boolean exists = repository.existsByApartmentIdAndLogDate(
                 apartment.getId(),
@@ -35,7 +37,7 @@ public class DailyLogService {
         );
 
         if (exists) {
-            throw new RuntimeException("Daily log already exists for this date");
+            throw new ApiException(HttpStatus.CONFLICT, "Daily log already exists for this date");
         }
 
         log.setApartment(apartment);

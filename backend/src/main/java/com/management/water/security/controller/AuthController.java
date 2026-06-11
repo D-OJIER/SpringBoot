@@ -4,9 +4,9 @@ import com.management.water.security.dto.LoginRequest;
 import com.management.water.security.entity.User;
 import com.management.water.security.jwt.JwtService;
 import com.management.water.security.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
-
+import com.management.water.modules.common.exception.ApiException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -23,42 +23,28 @@ public class AuthController {
 
         @PostMapping("/login")
         public Map<String, String> login(
-                @RequestBody LoginRequest request
-        ) {
+                        @RequestBody LoginRequest request) {
 
-        User user =
-                repository.findByUsername(
-                        request.getUsername()
-                )
+                User user = repository.findByUsername(
+                                request.getUsername())
 
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found"
-                        ));
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 
-        if (
-                !passwordEncoder.matches(
-                        request.getPassword(),
-                        user.getPassword()
-                )
-        ) {
+                if (!passwordEncoder.matches(
+                                request.getPassword(),
+                                user.getPassword())) {
 
-                throw new RuntimeException(
-                        "Invalid password"
-                );
-        }
+                        throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid password");
+                }
 
-        String token =
-                jwtService.generateToken(
-                        user.getUsername(),
-                        user.getRole().name()
-                );
+                String token = jwtService.generateToken(
+                                user.getUsername(),
+                                user.getRole().name());
 
-        return Map.of(
-                "token",
-                token,
-                "role",
-                user.getRole().name()
-        );
+                return Map.of(
+                                "token",
+                                token,
+                                "role",
+                                user.getRole().name());
         }
 }

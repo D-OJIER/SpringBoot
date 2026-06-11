@@ -9,6 +9,8 @@ import com.management.water.modules.waterconfig.repository.ApartmentSourceConfig
 import com.management.water.modules.waterconfig.repository.WaterRateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.management.water.modules.common.exception.ApiException;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -75,7 +77,7 @@ public class BillingService {
                                 date
                         );
         if (rates.isEmpty()) {
-            throw new RuntimeException("No valid water rate for given date");
+            throw new ApiException(HttpStatus.NOT_FOUND, "No valid water rate for given date");
         }
 
         double remaining = litres;

@@ -8,6 +8,8 @@ import com.management.water.modules.property.repository.ApartmentTypeRepository;
 import com.management.water.modules.property.repository.BlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.management.water.modules.common.exception.ApiException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -23,11 +25,11 @@ public class ApartmentService {
 
         // 🔹 Fetch real Block from DB
         Block block = blockRepository.findById(apartment.getBlock().getId())
-                .orElseThrow(() -> new RuntimeException("Block not found"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Block not found"));
 
         // 🔹 Fetch real ApartmentType from DB
         ApartmentType type = typeRepository.findById(apartment.getType().getId())
-                .orElseThrow(() -> new RuntimeException("ApartmentType not found"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "ApartmentType not found"));
 
         // 🔹 Attach full objects
         apartment.setBlock(block);
