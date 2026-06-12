@@ -7,6 +7,10 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_daily_log_date", columnList = "log_date"),
+        @Index(name = "idx_daily_log_apartment_date", columnList = "apartment_id, log_date")
+})
 @Data
 public class DailyLog {
 

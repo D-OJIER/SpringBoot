@@ -8,7 +8,7 @@ import {
     ResponsiveContainer
 } from "recharts";
 
-function UsageChart({ data }) {
+function UsageChart({ data, loading = false }) {
 
     return (
 
@@ -16,6 +16,9 @@ function UsageChart({ data }) {
 
             <h2 className="chart-panel__title">Usage Trend</h2>
 
+            {loading ? (
+                <p className="chart-status">Loading usage data...</p>
+            ) : (
             <ResponsiveContainer
                 width="100%"
                 height={300}
@@ -41,6 +44,7 @@ function UsageChart({ data }) {
                 </LineChart>
 
             </ResponsiveContainer>
+            )}
 
         </div>
     );
