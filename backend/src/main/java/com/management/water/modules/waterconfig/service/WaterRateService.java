@@ -29,26 +29,42 @@ public class WaterRateService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid slab range");
         }
 
-        validateSlabs(source.getId());
+        if (rate.getEffectiveFrom() == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Effective from date is required");
+        }
+
+        if (rate.getEffectiveFrom().isAfter(java.time.LocalDate.now())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Effective from date cannot be in the future");
+        }
+
+        if (rate.getEffectiveTo() != null && rate.getEffectiveTo().isBefore(rate.getEffectiveFrom())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Effective to date must be on or after effective from date");
+        }
+
+        validateSlabs(source.getId(), rate);
 
         return rateRepository.save(rate);
     }
 
-    private void validateSlabs(Long sourceId) {
+    private void validateSlabs(Long sourceId, WaterRate candidate) {
 
         List<WaterRate> rates =
                 rateRepository.findBySourceIdOrderByMinLitresAsc(sourceId);
 
-        if (rates.isEmpty()) return;
+        List<WaterRate> allRates = new java.util.ArrayList<>(rates);
+        allRates.add(candidate);
+        allRates.sort((a, b) -> Double.compare(a.getMinLitres(), b.getMinLitres()));
 
-        if (rates.get(0).getMinLitres() != 0) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Slabs must start at 0");
+        if (allRates.isEmpty()) return;
+
+        if (allRates.get(0).getMinLitres() != 0) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "The first water rate slab must start at 0 litres");
         }
 
-        for (int i = 0; i < rates.size() - 1; i++) {
+        for (int i = 0; i < allRates.size() - 1; i++) {
 
-            WaterRate current = rates.get(i);
-            WaterRate next = rates.get(i + 1);
+            WaterRate current = allRates.get(i);
+            WaterRate next = allRates.get(i + 1);
 
             if (current.getMaxLitres() + 1 != next.getMinLitres()) {
                 throw new ApiException(HttpStatus.BAD_REQUEST, "Slabs are not continuous");
@@ -93,6 +109,18 @@ public class WaterRateService {
 
         if (updated.getMinLitres() > updated.getMaxLitres()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Invalid slab range");
+        }
+
+        if (updated.getEffectiveFrom() == null) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Effective from date is required");
+        }
+
+        if (updated.getEffectiveFrom().isAfter(java.time.LocalDate.now())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Effective from date cannot be in the future");
+        }
+
+        if (updated.getEffectiveTo() != null && updated.getEffectiveTo().isBefore(updated.getEffectiveFrom())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Effective to date must be on or after effective from date");
         }
 
         List<WaterRate> rates =
