@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
 
 import MainLayout from "../layouts/MainLayout";
 import UsageChart from "../components/UsageChart";
 import api from "../api/axios";
-import { getDefaultDateRange } from "../utils/dateRange";
+import {
+    getDefaultDateRange,
+    getEarliestAllowedDate,
+    validateDateRange
+} from "../utils/dateRange";
 
 function DashboardPage() {
 
     const [logs, setLogs] = useState([]);
-    const [dateRange] = useState(getDefaultDateRange);
+    const [filters, setFilters] = useState({
+        apartmentNumber: "",
+        ...getDefaultDateRange()
+    });
+    const [appliedFilters, setAppliedFilters] = useState(filters);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -22,10 +31,10 @@ function DashboardPage() {
         async function loadDashboard() {
             try {
                 const [statsResponse, logsResponse] = await Promise.all([
-                    api.get("/dashboard/stats", { params: dateRange }),
+                    api.get("/dashboard/stats", { params: appliedFilters }),
                     api.get("/daily-logs", {
                         params: {
-                            ...dateRange,
+                            ...appliedFilters,
                             page: 0,
                             size: 100
                         }
@@ -44,7 +53,21 @@ function DashboardPage() {
         }
 
         loadDashboard();
-    }, [dateRange]);
+    }, [appliedFilters]);
+
+    const applyFilters = (event) => {
+        event.preventDefault();
+
+        const validationError = validateDateRange(filters.fromDate, filters.toDate);
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+
+        setError("");
+        setLoading(true);
+        setAppliedFilters(filters);
+    };
 
     return (
 
@@ -52,10 +75,53 @@ function DashboardPage() {
 
             <header className="page-header">
                 <h1 className="page-title">Dashboard</h1>
-                <p className="page-subtitle">
-                    {dateRange.fromDate} to {dateRange.toDate}
-                </p>
             </header>
+
+            <form className="filter-bar" onSubmit={applyFilters}>
+                <input
+                    className="form-control"
+                    type="search"
+                    placeholder="Apartment number"
+                    value={filters.apartmentNumber}
+                    onChange={(event) => setFilters({
+                        ...filters,
+                        apartmentNumber: event.target.value
+                    })}
+                />
+                <input
+                    className="form-control"
+                    type="date"
+                    aria-label="From date"
+                    value={filters.fromDate}
+                    min={getEarliestAllowedDate(filters.toDate)}
+                    max={filters.toDate}
+                    onChange={(event) => setFilters({
+                        ...filters,
+                        fromDate: event.target.value
+                    })}
+                    required
+                />
+                <input
+                    className="form-control"
+                    type="date"
+                    aria-label="To date"
+                    value={filters.toDate}
+                    min={filters.fromDate}
+                    onChange={(event) => setFilters({
+                        ...filters,
+                        toDate: event.target.value
+                    })}
+                    required
+                />
+                <button className="button" type="submit">
+                    <Search size={18} />
+                    Apply
+                </button>
+            </form>
+
+            <p className="page-subtitle">
+                {appliedFilters.fromDate} to {appliedFilters.toDate}
+            </p>
 
             {error && <p className="error-message">{error}</p>}
 
