@@ -1,7 +1,10 @@
 package com.management.water.modules.telemetry.controller;
 
 import com.management.water.modules.telemetry.entity.DailyLog;
+import com.management.water.modules.telemetry.dto.DailyLogCreateRequest;
 import com.management.water.modules.telemetry.service.DailyLogService;
+import com.management.water.modules.property.entity.Apartment;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -16,7 +19,14 @@ public class DailyLogController {
     private final DailyLogService service;
 
     @PostMapping
-    public DailyLog create(@RequestBody DailyLog log) {
+    public DailyLog create(@Valid @RequestBody DailyLogCreateRequest request) {
+        DailyLog log = new DailyLog();
+        log.setLogDate(request.getLogDate());
+        log.setTotalLitresConsumed(request.getTotalLitresConsumed());
+        log.setGuestCount(request.getGuestCount());
+        Apartment apartment = new Apartment();
+        apartment.setId(request.getApartmentId());
+        log.setApartment(apartment);
         return service.create(log);
     }
 

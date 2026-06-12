@@ -1,7 +1,11 @@
 package com.management.water.modules.property.controller;
 
 import com.management.water.modules.property.entity.Apartment;
+import com.management.water.modules.property.entity.Block;
+import com.management.water.modules.property.entity.ApartmentType;
+import com.management.water.modules.property.dto.ApartmentCreateRequest;
 import com.management.water.modules.property.service.ApartmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +19,15 @@ public class ApartmentController {
     private final ApartmentService service;
 
     @PostMapping
-    public Apartment create(@RequestBody Apartment apartment) {
+    public Apartment create(@Valid @RequestBody ApartmentCreateRequest request) {
+        Apartment apartment = new Apartment();
+        apartment.setNumber(request.getNumber());
+        Block block = new Block();
+        block.setId(request.getBlockId());
+        apartment.setBlock(block);
+        ApartmentType type = new ApartmentType();
+        type.setId(request.getTypeId());
+        apartment.setType(type);
         return service.create(apartment);
     }
 

@@ -4,6 +4,7 @@ import com.management.water.security.dto.LoginRequest;
 import com.management.water.security.entity.User;
 import com.management.water.security.jwt.JwtService;
 import com.management.water.security.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import com.management.water.modules.common.exception.ApiException;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class AuthController {
 
         @PostMapping("/login")
         public Map<String, String> login(
-                        @RequestBody LoginRequest request) {
+                        @Valid @RequestBody LoginRequest request) {
 
                 User user = repository.findByUsername(
                                 request.getUsername())
