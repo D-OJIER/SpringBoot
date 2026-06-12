@@ -39,10 +39,7 @@ public class SecurityConfig {
 
                                                 .requestMatchers(
                                                                 "/monthly-summary/**")
-                                                .hasAnyRole(
-                                                                "ADMIN",
-                                                                "MANAGER")
-
+                                                .hasRole("ADMIN")
                                                 .requestMatchers(
                                                                 "/water-rates/**",
                                                                 "/water-sources/**",

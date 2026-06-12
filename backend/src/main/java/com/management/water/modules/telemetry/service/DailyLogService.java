@@ -5,6 +5,7 @@ import com.management.water.modules.billing.repository.SlabMonthlySummaryReposit
 import com.management.water.modules.billing.service.BillingService;
 import com.management.water.modules.property.entity.Apartment;
 import com.management.water.modules.property.repository.ApartmentRepository;
+import com.management.water.security.utils.SecurityUtils;
 import com.management.water.modules.telemetry.entity.DailyLog;
 import com.management.water.modules.telemetry.entity.DailyLogSourceBreakdown;
 import com.management.water.modules.telemetry.repository.DailyLogRepository;
@@ -37,6 +38,7 @@ public class DailyLogService {
     private final DailyLogRepository repository;
     private final ApartmentRepository apartmentRepository;
     private final BillingService billingService;
+    private final SecurityUtils securityUtils;
 
     public DailyLog create(DailyLog log) {
 
@@ -100,6 +102,14 @@ public class DailyLogService {
             LocalDate fromDate,
             LocalDate toDate) {
         validatePagination(page, size);
+        
+        if (securityUtils.isCurrentUserResident()) {
+            var currentUser = securityUtils.getCurrentUser();
+            if (currentUser != null && currentUser.getApartment() != null) {
+                apartmentNumber = currentUser.getApartment().getNumber();
+            }
+        }
+        
         DateRange dateRange = resolveDateRange(fromDate, toDate);
         Pageable pageable = PageRequest.of(
                 page,
@@ -114,6 +124,14 @@ public class DailyLogService {
             String apartmentNumber,
             LocalDate fromDate,
             LocalDate toDate) {
+        
+        if (securityUtils.isCurrentUserResident()) {
+            var currentUser = securityUtils.getCurrentUser();
+            if (currentUser != null && currentUser.getApartment() != null) {
+                apartmentNumber = currentUser.getApartment().getNumber();
+            }
+        }
+        
         DateRange dateRange = resolveDateRange(fromDate, toDate);
         DailyLogRepository.DashboardStatsProjection stats = repository.summarizeStats(
                 normalizeApartmentNumber(apartmentNumber),

@@ -1,5 +1,6 @@
 package com.management.water.security.entity;
 
+import com.management.water.modules.property.entity.Apartment;
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -22,4 +23,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "apartment_id")
+    private Apartment apartment;
 }
