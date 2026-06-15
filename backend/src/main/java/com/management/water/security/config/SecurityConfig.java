@@ -38,6 +38,10 @@ public class SecurityConfig {
                                                 .permitAll()
 
                                                 .requestMatchers(
+                                                                "/actuator/health",
+                                                                "/actuator/info")
+                                                .permitAll()
+                                                .requestMatchers(
                                                                 "/monthly-summary/**")
                                                 .hasRole("ADMIN")
                                                 .requestMatchers(
