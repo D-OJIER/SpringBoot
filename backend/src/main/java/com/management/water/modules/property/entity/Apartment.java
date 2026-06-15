@@ -7,17 +7,17 @@ import lombok.Data;
 @Data
 public class Apartment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String number;
+  private String number;
 
-    @ManyToOne
-    @JoinColumn(name = "block_id")
-    private Block block;
+  @ManyToOne
+  @JoinColumn(name = "block_id")
+  private Block block;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private ApartmentType type;
+  @ManyToOne
+  @JoinColumn(name = "type_id")
+  private ApartmentType type;
 }

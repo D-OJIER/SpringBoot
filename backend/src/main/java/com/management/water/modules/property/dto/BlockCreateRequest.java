@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class BlockCreateRequest {
 
-    @NotBlank(message = "Block name is required")
-    private String name;
+  @NotBlank(message = "Block name is required")
+  private String name;
 }

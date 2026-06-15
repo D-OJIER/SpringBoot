@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 public class WaterSource {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String name; // City, Borewell, Tanker
+  private String name; // City, Borewell, Tanker
 
-    private String pricingType; // SLAB, FIXED
+  private String pricingType; // SLAB, FIXED
 
-    private String supplyType; // MUNICIPAL, PRIVATE
+  private String supplyType; // MUNICIPAL, PRIVATE
 }

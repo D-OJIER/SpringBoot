@@ -8,17 +8,17 @@ import lombok.Data;
 @Data
 public class ApartmentSourceConfig {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private double ratioPercent; // Example: 60, 40
+  private double ratioPercent; // Example: 60, 40
 
-    @ManyToOne
-    @JoinColumn(name = "apartment_id")
-    private Apartment apartment;
+  @ManyToOne
+  @JoinColumn(name = "apartment_id")
+  private Apartment apartment;
 
-    @ManyToOne
-    @JoinColumn(name = "source_id")
-    private WaterSource source;
+  @ManyToOne
+  @JoinColumn(name = "source_id")
+  private WaterSource source;
 }

@@ -1,8 +1,9 @@
 package com.management.water.security.config;
 
+import com.management.water.security.jwt.JwtAuthenticationFilter;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.management.water.security.jwt.JwtAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,76 +13,61 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.List;
 
 @Configuration
 public class SecurityConfig {
 
-        private final JwtAuthenticationFilter jwtFilter;
+  private final JwtAuthenticationFilter jwtFilter;
 
-        public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
-                this.jwtFilter = jwtFilter;
-        }
+  public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
+    this.jwtFilter = jwtFilter;
+  }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-                http
-                                .cors(cors -> cors.configurationSource(
-                                                corsConfigurationSource()))
-                                .csrf(csrf -> csrf.disable())
-                                .sessionManagement(session -> session.sessionCreationPolicy(
-                                                SessionCreationPolicy.STATELESS))
-                                .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers(
-                                                                "/auth/**")
-                                                .permitAll()
+    http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers("/auth/**")
+                    .permitAll()
+                    .requestMatchers("/actuator/health", "/actuator/info")
+                    .permitAll()
+                    .requestMatchers("/monthly-summary/**")
+                    .hasRole("ADMIN")
+                    .requestMatchers("/water-rates/**", "/water-sources/**", "/apartments/**")
+                    .hasRole("ADMIN")
+                    .anyRequest()
+                    .authenticated())
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
 
-                                                .requestMatchers(
-                                                                "/actuator/health",
-                                                                "/actuator/info")
-                                                .permitAll()
-                                                .requestMatchers(
-                                                                "/monthly-summary/**")
-                                                .hasRole("ADMIN")
-                                                .requestMatchers(
-                                                                "/water-rates/**",
-                                                                "/water-sources/**",
-                                                                "/apartments/**")
-                                                .hasRole("ADMIN")
+  @Bean
+  public PasswordEncoder passwordEncoder() {
 
-                                                .anyRequest()
-                                                .authenticated())
-                                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-                return http.build();
-        }
+    return new BCryptPasswordEncoder();
+  }
 
-        @Bean
-        public PasswordEncoder passwordEncoder() {
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
 
-                return new BCryptPasswordEncoder();
-        }
+    CorsConfiguration configuration = new CorsConfiguration();
 
-        @Bean
-        public CorsConfigurationSource corsConfigurationSource() {
+    configuration.addAllowedOrigin("http://localhost:5173");
 
-                CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.addAllowedHeader("*");
 
-                configuration.addAllowedOrigin(
-                                "http://localhost:5173");
+    configuration.setAllowCredentials(true);
 
-                configuration.setAllowedMethods(
-                                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                configuration.addAllowedHeader("*");
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
-                configuration.setAllowCredentials(true);
+    source.registerCorsConfiguration("/**", configuration);
 
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-                source.registerCorsConfiguration(
-                                "/**",
-                                configuration);
-
-                return source;
-        }
+    return source;
+  }
 }

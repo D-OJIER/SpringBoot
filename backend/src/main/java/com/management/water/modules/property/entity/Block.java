@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class Block {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String name; // Example: A, B, C Block
+  private String name; // Example: A, B, C Block
 }

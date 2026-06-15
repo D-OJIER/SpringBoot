@@ -1,18 +1,19 @@
 package com.management.water.modules.telemetry.repository;
 
 import com.management.water.modules.telemetry.entity.DailyLog;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
-import java.util.List;
+public interface DailyLogRepository
+    extends JpaRepository<DailyLog, Long>, JpaSpecificationExecutor<DailyLog> {
+  boolean existsByApartmentIdAndLogDate(Long apartmentId, LocalDate logDate);
 
-public interface DailyLogRepository extends JpaRepository<DailyLog, Long>, JpaSpecificationExecutor<DailyLog> {
-    boolean existsByApartmentIdAndLogDate(Long apartmentId, LocalDate logDate);
-
-    @Query("""
+  @Query(
+      """
             SELECT COUNT(log) AS totalLogs,
                    COALESCE(SUM(log.totalLitresConsumed), 0) AS totalUsage,
                    COALESCE(SUM(log.dayCost), 0) AS totalCost
@@ -21,12 +22,13 @@ public interface DailyLogRepository extends JpaRepository<DailyLog, Long>, JpaSp
               AND (:apartmentNumber IS NULL
                    OR LOWER(log.apartment.number) LIKE LOWER(CONCAT('%', :apartmentNumber, '%')))
             """)
-    DashboardStatsProjection summarizeStats(
-            @Param("apartmentNumber") String apartmentNumber,
-            @Param("fromDate") LocalDate fromDate,
-            @Param("toDate") LocalDate toDate);
+  DashboardStatsProjection summarizeStats(
+      @Param("apartmentNumber") String apartmentNumber,
+      @Param("fromDate") LocalDate fromDate,
+      @Param("toDate") LocalDate toDate);
 
-    @Query("""
+  @Query(
+      """
             SELECT log.apartment.number AS apartment,
                    COALESCE(SUM(log.totalLitresConsumed), 0) AS totalUsage,
                    COALESCE(SUM(log.dayCost), 0) AS totalCost
@@ -37,24 +39,24 @@ public interface DailyLogRepository extends JpaRepository<DailyLog, Long>, JpaSp
             GROUP BY log.apartment.number
             ORDER BY log.apartment.number
             """)
-    List<MonthlySummaryProjection> summarizeByApartment(
-            @Param("apartmentNumber") String apartmentNumber,
-            @Param("fromDate") LocalDate fromDate,
-            @Param("toDate") LocalDate toDate);
+  List<MonthlySummaryProjection> summarizeByApartment(
+      @Param("apartmentNumber") String apartmentNumber,
+      @Param("fromDate") LocalDate fromDate,
+      @Param("toDate") LocalDate toDate);
 
-    interface DashboardStatsProjection {
-        long getTotalLogs();
+  interface DashboardStatsProjection {
+    long getTotalLogs();
 
-        double getTotalUsage();
+    double getTotalUsage();
 
-        double getTotalCost();
-    }
+    double getTotalCost();
+  }
 
-    interface MonthlySummaryProjection {
-        String getApartment();
+  interface MonthlySummaryProjection {
+    String getApartment();
 
-        double getTotalUsage();
+    double getTotalUsage();
 
-        double getTotalCost();
-    }
+    double getTotalCost();
+  }
 }

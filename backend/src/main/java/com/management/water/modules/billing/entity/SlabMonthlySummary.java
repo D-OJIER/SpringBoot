@@ -9,23 +9,23 @@ import lombok.Data;
 @Data
 public class SlabMonthlySummary {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private int year;
+  private int year;
 
-    private int month;
+  private int month;
 
-    private double totalLitres;
+  private double totalLitres;
 
-    private double totalCost;
+  private double totalCost;
 
-    @ManyToOne
-    @JoinColumn(name = "apartment_id")
-    private Apartment apartment;
+  @ManyToOne
+  @JoinColumn(name = "apartment_id")
+  private Apartment apartment;
 
-    @ManyToOne
-    @JoinColumn(name = "source_id")
-    private WaterSource source;
+  @ManyToOne
+  @JoinColumn(name = "source_id")
+  private WaterSource source;
 }

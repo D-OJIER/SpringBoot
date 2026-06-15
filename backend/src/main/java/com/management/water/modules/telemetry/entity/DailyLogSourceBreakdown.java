@@ -8,19 +8,19 @@ import lombok.Data;
 @Data
 public class DailyLogSourceBreakdown {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private double litres;
+  private double litres;
 
-    private double cost;
+  private double cost;
 
-    @ManyToOne
-    @JoinColumn(name = "daily_log_id")
-    private DailyLog dailyLog;
+  @ManyToOne
+  @JoinColumn(name = "daily_log_id")
+  private DailyLog dailyLog;
 
-    @ManyToOne
-    @JoinColumn(name = "source_id")
-    private WaterSource source;
+  @ManyToOne
+  @JoinColumn(name = "source_id")
+  private WaterSource source;
 }
