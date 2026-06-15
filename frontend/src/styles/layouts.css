@@ -4,187 +4,184 @@
 ================================ */
 
 :root {
-    /* ================================
+  /* ================================
        TYPOGRAPHY
     ================================= */
 
-    font-family:
-        "Hanken Grotesk",
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+  font-family:
+    "Hanken Grotesk",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 
-    color: var(--on-background);
-    background: var(--background);
+  color: var(--on-background);
+  background: var(--background);
 
-    /* ================================
+  /* ================================
        CORE SURFACES
     ================================= */
 
-    --background: #f7f9fb;
+  --background: #f7f9fb;
 
-    --surface: #f7f9fb;
-    --surface-bright: #f7f9fb;
-    --surface-dim: #d8dadc;
+  --surface: #f7f9fb;
+  --surface-bright: #f7f9fb;
+  --surface-dim: #d8dadc;
 
-    --surface-container-lowest: #ffffff;
-    --surface-container-low: #f2f4f6;
-    --surface-container: #eceef0;
-    --surface-container-high: #e6e8ea;
-    --surface-container-highest: #e0e3e5;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f2f4f6;
+  --surface-container: #eceef0;
+  --surface-container-high: #e6e8ea;
+  --surface-container-highest: #e0e3e5;
 
-    /* ================================
+  /* ================================
        TEXT COLORS
     ================================= */
 
-    --on-background: #191c1e;
-    --on-surface: #191c1e;
-    --on-surface-variant: #424752;
+  --on-background: #191c1e;
+  --on-surface: #191c1e;
+  --on-surface-variant: #424752;
 
-    --inverse-surface: #2d3133;
-    --inverse-on-surface: #eff1f3;
+  --inverse-surface: #2d3133;
+  --inverse-on-surface: #eff1f3;
 
-    /* ================================
+  /* ================================
        PRIMARY SYSTEM
     ================================= */
 
-    --primary: #00478d;
-    --primary-container: #005eb8;
+  --primary: #00478d;
+  --primary-container: #005eb8;
 
-    --primary-fixed: #d6e3ff;
-    --primary-fixed-dim: #a9c7ff;
+  --primary-fixed: #d6e3ff;
+  --primary-fixed-dim: #a9c7ff;
 
-    --on-primary: #ffffff;
-    --on-primary-container: #c8daff;
+  --on-primary: #ffffff;
+  --on-primary-container: #c8daff;
 
-    --on-primary-fixed: #001b3d;
-    --on-primary-fixed-variant: #00468c;
+  --on-primary-fixed: #001b3d;
+  --on-primary-fixed-variant: #00468c;
 
-    --inverse-primary: #a9c7ff;
+  --inverse-primary: #a9c7ff;
 
-    /* ================================
+  /* ================================
        SECONDARY SYSTEM
     ================================= */
 
-    --secondary: #006970;
-    --secondary-container: #7af1fc;
+  --secondary: #006970;
+  --secondary-container: #7af1fc;
 
-    --secondary-fixed: #7df4ff;
-    --secondary-fixed-dim: #5dd8e2;
+  --secondary-fixed: #7df4ff;
+  --secondary-fixed-dim: #5dd8e2;
 
-    --on-secondary: #ffffff;
-    --on-secondary-container: #006e75;
+  --on-secondary: #ffffff;
+  --on-secondary-container: #006e75;
 
-    --on-secondary-fixed: #002022;
-    --on-secondary-fixed-variant: #004f54;
+  --on-secondary-fixed: #002022;
+  --on-secondary-fixed-variant: #004f54;
 
-    /* ================================
+  /* ================================
        TERTIARY / SUCCESS
     ================================= */
 
-    --tertiary: #005328;
-    --tertiary-container: #006e37;
+  --tertiary: #005328;
+  --tertiary-container: #006e37;
 
-    --tertiary-fixed: #6bfe9c;
-    --tertiary-fixed-dim: #4ae183;
+  --tertiary-fixed: #6bfe9c;
+  --tertiary-fixed-dim: #4ae183;
 
-    --on-tertiary: #ffffff;
-    --on-tertiary-container: #61f594;
+  --on-tertiary: #ffffff;
+  --on-tertiary-container: #61f594;
 
-    --on-tertiary-fixed: #00210c;
-    --on-tertiary-fixed-variant: #005228;
+  --on-tertiary-fixed: #00210c;
+  --on-tertiary-fixed-variant: #005228;
 
-    /* ================================
+  /* ================================
        ERROR SYSTEM
     ================================= */
 
-    --error: #ba1a1a;
-    --error-container: #ffdad6;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
 
-    --on-error: #ffffff;
-    --on-error-container: #93000a;
+  --on-error: #ffffff;
+  --on-error-container: #93000a;
 
-    /* ================================
+  /* ================================
        BORDERS / OUTLINES
     ================================= */
 
-    --outline: #727783;
-    --outline-variant: #c2c6d4;
+  --outline: #727783;
+  --outline-variant: #c2c6d4;
 
-    --surface-variant: #e0e3e5;
+  --surface-variant: #e0e3e5;
 
-    /* ================================
+  /* ================================
        SURFACE TINTS
     ================================= */
 
-    --surface-tint: #005db6;
+  --surface-tint: #005db6;
 
-    /* ================================
+  /* ================================
        SIDEBAR TOKENS
     ================================= */
 
-    --sidebar: #ffffff;
-    --sidebar-soft: #f2f4f6;
-    --sidebar-border: #c2c6d4;
+  --sidebar: #ffffff;
+  --sidebar-soft: #f2f4f6;
+  --sidebar-border: #c2c6d4;
 
-    /* ================================
+  /* ================================
        SHADOW SYSTEM
     ================================= */
 
-    --shadow-xs: 0 1px 2px rgba(25, 28, 30, 0.03);
+  --shadow-xs: 0 1px 2px rgba(25, 28, 30, 0.03);
 
-    --shadow-sm:
-        0 2px 4px rgba(25, 28, 30, 0.04),
-        0 1px 2px rgba(25, 28, 30, 0.02);
+  --shadow-sm:
+    0 2px 4px rgba(25, 28, 30, 0.04), 0 1px 2px rgba(25, 28, 30, 0.02);
 
-    --shadow-md:
-        0 8px 24px rgba(25, 28, 30, 0.06);
+  --shadow-md: 0 8px 24px rgba(25, 28, 30, 0.06);
 
-    --shadow-lg:
-        0 18px 40px rgba(25, 28, 30, 0.08);
+  --shadow-lg: 0 18px 40px rgba(25, 28, 30, 0.08);
 
-    /* ================================
+  /* ================================
        RADIUS SYSTEM
     ================================= */
 
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-full: 9999px;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
 
-    /* ================================
+  /* ================================
        SPACING TOKENS
     ================================= */
 
-    --space-base: 4px;
+  --space-base: 4px;
 
-    --space-stack-sm: 8px;
-    --space-stack-md: 16px;
-    --space-stack-lg: 24px;
+  --space-stack-sm: 8px;
+  --space-stack-md: 16px;
+  --space-stack-lg: 24px;
 
-    --space-card-padding: 16px;
-    --space-gutter: 12px;
-    --space-mobile-margin: 20px;
+  --space-card-padding: 16px;
+  --space-gutter: 12px;
+  --space-mobile-margin: 20px;
 
-    /* ================================
+  /* ================================
        TRANSITIONS
     ================================= */
 
-    --transition-fast: 160ms ease;
-    --transition-medium: 220ms ease;
+  --transition-fast: 160ms ease;
+  --transition-medium: 220ms ease;
 
-    /* ================================
+  /* ================================
        LAYOUT
     ================================= */
 
-    --sidebar-width: 270px;
+  --sidebar-width: 270px;
 }
 
 /* ================================
@@ -194,23 +191,23 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 
-    min-width: 320px;
-    min-height: 100vh;
+  min-width: 320px;
+  min-height: 100vh;
 
-    background: var(--background);
-    color: var(--on-background);
+  background: var(--background);
+  color: var(--on-background);
 
-    font-family: "Hanken Grotesk", sans-serif;
+  font-family: "Hanken Grotesk", sans-serif;
 }
 
 /* ================================
@@ -221,7 +218,7 @@ button,
 input,
 select,
 textarea {
-    font: inherit;
+  font: inherit;
 }
 
 /* ================================
@@ -229,19 +226,19 @@ textarea {
 ================================ */
 
 .app-shell {
-    display: flex;
+  display: flex;
 
-    min-height: 100vh;
+  min-height: 100vh;
 
-    background:
-        radial-gradient(
-            circle at top left,
-            rgba(0, 93, 182, 0.08),
-            transparent 32rem
-        ),
-        var(--background);
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(0, 93, 182, 0.08),
+      transparent 32rem
+    ),
+    var(--background);
 
-    color: var(--on-background);
+  color: var(--on-background);
 }
 
 /* ================================
@@ -249,10 +246,10 @@ textarea {
 ================================ */
 
 .main-content {
-    flex: 1;
-    min-width: 0;
+  flex: 1;
+  min-width: 0;
 
-    padding: 32px;
+  padding: 32px;
 }
 
 /* ================================
@@ -260,21 +257,21 @@ textarea {
 ================================ */
 
 .sidebar {
-    width: var(--sidebar-width);
-    flex-shrink: 0;
+  width: var(--sidebar-width);
+  flex-shrink: 0;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    padding: 24px 18px;
+  padding: 24px 18px;
 
-    background: var(--surface-container-lowest);
+  background: var(--surface-container-lowest);
 
-    border-right: 1px solid var(--outline-variant);
+  border-right: 1px solid var(--outline-variant);
 
-    color: var(--on-surface);
+  color: var(--on-surface);
 
-    backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 /* ================================
@@ -282,19 +279,19 @@ textarea {
 ================================ */
 
 .sidebar__brand {
-    margin: 0 0 28px;
+  margin: 0 0 28px;
 
-    padding: 0 10px 22px;
+  padding: 0 10px 22px;
 
-    border-bottom: 1px solid var(--outline-variant);
+  border-bottom: 1px solid var(--outline-variant);
 
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
 
-    letter-spacing: -0.02em;
+  letter-spacing: -0.02em;
 
-    color: var(--primary);
+  color: var(--primary);
 }
 
 /* ================================
@@ -302,10 +299,10 @@ textarea {
 ================================ */
 
 .sidebar__nav {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    gap: 8px;
+  gap: 8px;
 }
 
 /* ================================
@@ -313,43 +310,43 @@ textarea {
 ================================ */
 
 .sidebar__link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-    padding: 12px 14px;
+  padding: 12px 14px;
 
-    border-radius: var(--radius-md);
+  border-radius: var(--radius-md);
 
-    color: var(--on-surface-variant);
+  color: var(--on-surface-variant);
 
-    text-decoration: none;
+  text-decoration: none;
 
-    transition:
-        background-color var(--transition-fast),
-        color var(--transition-fast),
-        transform var(--transition-fast),
-        border-color var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .sidebar__link:hover {
-    background: var(--surface-container-low);
+  background: var(--surface-container-low);
 
-    color: var(--primary);
+  color: var(--primary);
 
-    transform: translateX(2px);
+  transform: translateX(2px);
 }
 
 /* Active State */
 
 .sidebar__link--active {
-    background: var(--surface-container-low);
+  background: var(--surface-container-low);
 
-    color: var(--primary);
+  color: var(--primary);
 
-    font-weight: 700;
+  font-weight: 700;
 
-    border-right: 4px solid var(--primary);
+  border-right: 4px solid var(--primary);
 }
 
 /* ================================
@@ -357,8 +354,8 @@ textarea {
 ================================ */
 
 .sidebar__logout {
-    margin-top: 18px;
-    justify-content: center;
+  margin-top: 18px;
+  justify-content: center;
 }
 
 /* ================================
@@ -366,29 +363,28 @@ textarea {
 ================================ */
 
 @media (max-width: 860px) {
-    .app-shell {
-        flex-direction: column;
-    }
+  .app-shell {
+    flex-direction: column;
+  }
 
-    .sidebar {
-        width: 100%;
+  .sidebar {
+    width: 100%;
 
-        padding: 18px;
-    }
+    padding: 18px;
+  }
 
-    .sidebar__brand {
-        margin-bottom: 16px;
-        padding-bottom: 14px;
-    }
+  .sidebar__brand {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+  }
 
-    .sidebar__nav {
-        display: grid;
+  .sidebar__nav {
+    display: grid;
 
-        grid-template-columns:
-            repeat(auto-fit, minmax(160px, 1fr));
-    }
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
 
-    .main-content {
-        padding: 22px;
-    }
+  .main-content {
+    padding: 22px;
+  }
 }

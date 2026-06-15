@@ -13,102 +13,94 @@ import MonthlySummaryPage from "./pages/MonthlySummaryPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-    return (
-        <Routes>
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
 
-            <Route
-                path="/login"
-                element={<LoginPage />}
-            />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-            <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
-            />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/dashboard"
-                element={
-                    <ProtectedRoute>
-                        <DashboardPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/logs"
+        element={
+          <ProtectedRoute>
+            <DailyLogsPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/logs"
-                element={
-                    <ProtectedRoute>
-                        <DailyLogsPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/sources"
+        element={
+          <ProtectedRoute>
+            <WaterSourcesPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/sources"
-                element={
-                    <ProtectedRoute>
-                        <WaterSourcesPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/rates"
+        element={
+          <ProtectedRoute>
+            <WaterRatesPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/rates"
-                element={
-                    <ProtectedRoute>
-                        <WaterRatesPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/apartments"
+        element={
+          <ProtectedRoute>
+            <ApartmentsPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/apartments"
-                element={
-                    <ProtectedRoute>
-                        <ApartmentsPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/apartment-types"
+        element={
+          <ProtectedRoute>
+            <ApartmentTypesPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/apartment-types"
-                element={
-                    <ProtectedRoute>
-                        <ApartmentTypesPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/blocks"
+        element={
+          <ProtectedRoute>
+            <BlocksPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/blocks"
-                element={
-                    <ProtectedRoute>
-                        <BlocksPage />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/source-configs"
+        element={
+          <ProtectedRoute>
+            <SourceConfigsPage />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/source-configs"
-                element={
-                    <ProtectedRoute>
-                        <SourceConfigsPage />
-                    </ProtectedRoute>
-                }
-            />
-
-            <Route
-                path="/monthly-summary"
-                element={
-                    <ProtectedRoute>
-                        <MonthlySummaryPage />
-                    </ProtectedRoute>
-                }
-            />
-
-        </Routes>
-    );
+      <Route
+        path="/monthly-summary"
+        element={
+          <ProtectedRoute>
+            <MonthlySummaryPage />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
 }
 
 export default App;

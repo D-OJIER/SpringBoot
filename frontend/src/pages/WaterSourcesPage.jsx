@@ -6,67 +6,44 @@ import AddWaterSourceForm from "../components/AddWaterSourceForm";
 import TableContainer from "../components/TableContainer";
 
 function WaterSourcesPage() {
+  const [sources, setSources] = useState([]);
 
-    const [sources, setSources] = useState([]);
+  useEffect(() => {
+    fetchSources();
+  }, []);
 
-    useEffect(() => {
-        fetchSources();
-    }, []);
+  const fetchSources = async () => {
+    try {
+      const response = await api.get("/water-sources");
 
-    const fetchSources = async () => {
+      setSources(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-        try {
+  return (
+    <MainLayout>
+      <header className="page-header">
+        <h1 className="page-title">Water Sources</h1>
+      </header>
 
-            const response =
-                await api.get("/water-sources");
+      <AddWaterSourceForm onSuccess={fetchSources} />
+      <TableContainer title="Available Sources">
+        <div className="list-grid">
+          {sources.map((source) => (
+            <div key={source.id} className="list-card">
+              <h2 className="list-card__title">{source.name}</h2>
 
-            setSources(response.data);
+              <p>Pricing Type: {source.pricingType}</p>
 
-        } catch (error) {
-
-            console.error(error);
-        }
-    };
-
-    return (
-
-        <MainLayout>
-
-            <header className="page-header">
-                <h1 className="page-title">Water Sources</h1>
-            </header>
-
-            <AddWaterSourceForm onSuccess={fetchSources} />
-            <TableContainer title="Available Sources">
-                <div className="list-grid">
-                    {sources.map(source => (
-
-                        <div
-                            key={source.id}
-                            className="list-card"
-                        >
-
-                            <h2 className="list-card__title">{source.name}</h2>
-
-                            <p>
-                                Pricing Type:
-                                {" "}
-                                {source.pricingType}
-                            </p>
-
-                            <p>
-                                Supply Type:
-                                {" "}
-                                {source.supplyType}
-                            </p>
-
-                        </div>
-                    ))}
-                </div>
-            </TableContainer>
-
-        </MainLayout>
-    );
+              <p>Supply Type: {source.supplyType}</p>
+            </div>
+          ))}
+        </div>
+      </TableContainer>
+    </MainLayout>
+  );
 }
 
 export default WaterSourcesPage;

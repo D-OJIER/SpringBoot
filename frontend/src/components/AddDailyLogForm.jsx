@@ -2,150 +2,122 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 function AddDailyLogForm({ onSuccess }) {
+  const [apartments, setApartments] = useState([]);
 
-    const [apartments, setApartments] = useState([]);
+  useEffect(() => {
+    fetchApartments();
+  }, []);
 
-    useEffect(() => {
-        fetchApartments();
-    }, []);
+  const fetchApartments = async () => {
+    try {
+      const response = await api.get("/apartments");
 
-    const fetchApartments = async () => {
+      setApartments(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-        try {
+  const [formData, setFormData] = useState({
+    logDate: "",
+    totalLitresConsumed: "",
+    guestCount: "",
+    apartmentId: "",
+  });
 
-            const response = await api.get("/apartments");
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-            setApartments(response.data);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        } catch (error) {
+    try {
+      await api.post("/daily-logs", {
+        logDate: formData.logDate,
+        totalLitresConsumed: Number(formData.totalLitresConsumed),
+        guestCount: Number(formData.guestCount),
+        apartment: {
+          id: Number(formData.apartmentId),
+        },
+      });
 
-            console.error(error);
-        }
-    };
+      alert("Daily Log Added");
 
-    const [formData, setFormData] = useState({
+      setFormData({
         logDate: "",
         totalLitresConsumed: "",
         guestCount: "",
-        apartmentId: ""
-    });
+        apartmentId: "",
+      });
 
-    const handleChange = (e) => {
+      onSuccess();
+    } catch (error) {
+      console.error(error);
 
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+      alert("Failed to add log");
+    }
+  };
 
-    const handleSubmit = async (e) => {
+  return (
+    <form onSubmit={handleSubmit} className="form-panel">
+      <h2 className="form-panel__title">Add Daily Log</h2>
 
-        e.preventDefault();
+      <div className="form-grid">
+        <input
+          type="date"
+          name="logDate"
+          value={formData.logDate}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
 
-        try {
+        <input
+          type="number"
+          name="totalLitresConsumed"
+          placeholder="Total Litres"
+          value={formData.totalLitresConsumed}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
 
-            await api.post("/daily-logs", {
-                logDate: formData.logDate,
-                totalLitresConsumed: Number(formData.totalLitresConsumed),
-                guestCount: Number(formData.guestCount),
-                apartment: {
-                    id: Number(formData.apartmentId)
-                }
-            });
+        <input
+          type="number"
+          name="guestCount"
+          placeholder="Guest Count"
+          value={formData.guestCount}
+          onChange={handleChange}
+          required
+          className="form-control"
+        />
 
-            alert("Daily Log Added");
-
-            setFormData({
-                logDate: "",
-                totalLitresConsumed: "",
-                guestCount: "",
-                apartmentId: ""
-            });
-
-            onSuccess();
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Failed to add log");
-        }
-    };
-
-    return (
-
-        <form
-            onSubmit={handleSubmit}
-            className="form-panel"
+        <select
+          name="apartmentId"
+          value={formData.apartmentId}
+          onChange={handleChange}
+          required
+          className="form-control"
         >
+          <option value="">Select Apartment</option>
 
-            <h2 className="form-panel__title">Add Daily Log</h2>
+          {apartments.map((apartment) => (
+            <option key={apartment.id} value={apartment.id}>
+              {apartment.number}
+            </option>
+          ))}
+        </select>
 
-            <div className="form-grid">
-                <input
-                    type="date"
-                    name="logDate"
-                    value={formData.logDate}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                />
-
-                <input
-                    type="number"
-                    name="totalLitresConsumed"
-                    placeholder="Total Litres"
-                    value={formData.totalLitresConsumed}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                />
-
-                <input
-                    type="number"
-                    name="guestCount"
-                    placeholder="Guest Count"
-                    value={formData.guestCount}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                />
-
-                <select
-                    name="apartmentId"
-                    value={formData.apartmentId}
-                    onChange={handleChange}
-                    required
-                    className="form-control"
-                >
-
-                    <option value="">
-                        Select Apartment
-                    </option>
-
-                    {apartments.map(apartment => (
-
-                        <option
-                            key={apartment.id}
-                            value={apartment.id}
-                        >
-                            {apartment.number}
-                        </option>
-
-                    ))}
-
-                </select>
-
-                <button
-                    type="submit"
-                    className="button"
-                >
-                    Add Log
-                </button>
-            </div>
-
-        </form>
-    );
+        <button type="submit" className="button">
+          Add Log
+        </button>
+      </div>
+    </form>
+  );
 }
 
 export default AddDailyLogForm;

@@ -6,107 +6,78 @@ import api from "../api/axios";
 import { getDefaultDateRange } from "../utils/dateRange";
 
 function MonthlySummaryPage() {
+  const [summary, setSummary] = useState([]);
+  const [dateRange] = useState(getDefaultDateRange);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    const [summary, setSummary] = useState([]);
-    const [dateRange] = useState(getDefaultDateRange);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+  useEffect(() => {
+    async function loadSummary() {
+      try {
+        const response = await api.get("/monthly-summary", {
+          params: dateRange,
+        });
 
-    useEffect(() => {
-        async function loadSummary() {
-            try {
-                const response = await api.get(
-                    "/monthly-summary",
-                    { params: dateRange }
-                );
+        setSummary(response.data);
+        setError("");
+      } catch (error) {
+        console.error(error);
+        setError(
+          error.response?.data?.error || "Unable to load monthly summary",
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
 
-                setSummary(response.data);
-                setError("");
-            } catch (error) {
-                console.error(error);
-                setError(error.response?.data?.error || "Unable to load monthly summary");
-            } finally {
-                setLoading(false);
-            }
-        }
+    loadSummary();
+  }, [dateRange]);
 
-        loadSummary();
-    }, [dateRange]);
+  return (
+    <MainLayout>
+      <header className="page-header">
+        <h1 className="page-title">Monthly Summary</h1>
+        <p className="page-subtitle">
+          {dateRange.fromDate} to {dateRange.toDate}
+        </p>
+      </header>
 
-    return (
+      {error && <p className="error-message">{error}</p>}
 
-        <MainLayout>
+      {!loading && !error && summary.length === 0 ? (
+        <div className="empty-state empty-state--panel">
+          <strong>No summary data for this period</strong>
+          <span>Billing totals appear after daily logs are recorded.</span>
+        </div>
+      ) : (
+        <TableContainer title="Billing Summary">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Apartment</th>
 
-            <header className="page-header">
-                <h1 className="page-title">Monthly Summary</h1>
-                <p className="page-subtitle">
-                    {dateRange.fromDate} to {dateRange.toDate}
-                </p>
-            </header>
+                <th>Total Usage</th>
 
-            {error && <p className="error-message">{error}</p>}
+                <th>Total Cost</th>
+              </tr>
+            </thead>
 
-            {!loading && !error && summary.length === 0 ? (
-                <div className="empty-state empty-state--panel">
-                    <strong>No summary data for this period</strong>
-                    <span>Billing totals appear after daily logs are recorded.</span>
-                </div>
-            ) : (
-            <TableContainer title="Billing Summary">
+            <tbody>
+              {summary.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.apartment}</td>
 
-                <table className="data-table">
+                  <td>{item.totalUsage} L</td>
 
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Apartment
-                            </th>
-
-                            <th>
-                                Total Usage
-                            </th>
-
-                            <th>
-                                Total Cost
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {summary.map((item, index) => (
-
-                            <tr key={index}>
-
-                                <td>
-                                    {item.apartment}
-                                </td>
-
-                                <td>
-                                    {item.totalUsage} L
-                                </td>
-
-                                <td>
-                                    ₹{item.totalCost}
-                                </td>
-
-                            </tr>
-
-                        ))}
-
-                    </tbody>
-
-                </table>
-
-            </TableContainer>
-            )}
-
-        </MainLayout>
-    );
+                  <td>₹{item.totalCost}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </TableContainer>
+      )}
+    </MainLayout>
+  );
 }
 
 export default MonthlySummaryPage;

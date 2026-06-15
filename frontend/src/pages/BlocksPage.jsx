@@ -5,167 +5,113 @@ import TableContainer from "../components/TableContainer";
 import api from "../api/axios";
 
 function BlocksPage() {
+  const [blocks, setBlocks] = useState([]);
 
-    const [blocks, setBlocks] = useState([]);
+  const [name, setName] = useState("");
 
-    const [name, setName] = useState("");
+  useEffect(() => {
+    fetchBlocks();
+  }, []);
 
-    useEffect(() => {
-        fetchBlocks();
-    }, []);
+  const fetchBlocks = async () => {
+    try {
+      const response = await api.get("/blocks");
 
-    const fetchBlocks = async () => {
+      setBlocks(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-        try {
+  const addBlock = async (e) => {
+    e.preventDefault();
 
-            const response =
-                await api.get("/blocks");
+    try {
+      await api.post("/blocks", {
+        name,
+      });
 
-            setBlocks(response.data);
+      setName("");
 
-        } catch (error) {
+      fetchBlocks();
+    } catch (error) {
+      console.error(error);
 
-            console.error(error);
-        }
-    };
+      alert("Failed to add block");
+    }
+  };
 
-    const addBlock = async (e) => {
+  const deleteBlock = async (id) => {
+    const confirmed = window.confirm("Delete this block?");
 
-        e.preventDefault();
+    if (!confirmed) return;
 
-        try {
+    try {
+      await api.delete(`/blocks/${id}`);
 
-            await api.post("/blocks", {
-                name
-            });
+      fetchBlocks();
+    } catch (error) {
+      console.error(error);
 
-            setName("");
+      alert("Failed to delete block");
+    }
+  };
 
-            fetchBlocks();
+  return (
+    <MainLayout>
+      <header className="page-header">
+        <h1 className="page-title">Blocks</h1>
+      </header>
 
-        } catch (error) {
+      <form onSubmit={addBlock} className="form-panel">
+        <h2 className="form-panel__title">Add Block</h2>
 
-            console.error(error);
+        <div className="form-grid">
+          <input
+            type="text"
+            placeholder="Block Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="form-control"
+          />
 
-            alert("Failed to add block");
-        }
-    };
+          <button type="submit" className="button">
+            Add Block
+          </button>
+        </div>
+      </form>
 
-    const deleteBlock = async (id) => {
+      <TableContainer title="Blocks">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
 
-        const confirmed =
-            window.confirm(
-                "Delete this block?"
-            );
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-        if (!confirmed) return;
+          <tbody>
+            {blocks.map((block) => (
+              <tr key={block.id}>
+                <td>{block.name}</td>
 
-        try {
-
-            await api.delete(`/blocks/${id}`);
-
-            fetchBlocks();
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert("Failed to delete block");
-        }
-    };
-
-    return (
-
-        <MainLayout>
-
-            <header className="page-header">
-                <h1 className="page-title">Blocks</h1>
-            </header>
-
-            <form
-                onSubmit={addBlock}
-                className="form-panel"
-            >
-
-                <h2 className="form-panel__title">Add Block</h2>
-
-                <div className="form-grid">
-                    <input
-                        type="text"
-                        placeholder="Block Name"
-                        value={name}
-                        onChange={(e) =>
-                            setName(e.target.value)
-                        }
-                        required
-                        className="form-control"
-                    />
-
-                    <button
-                        type="submit"
-                        className="button"
-                    >
-                        Add Block
-                    </button>
-                </div>
-
-            </form>
-
-            <TableContainer title="Blocks">
-
-                <table className="data-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Actions
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {blocks.map(block => (
-
-                            <tr key={block.id}>
-
-                                <td>
-                                    {block.name}
-                                </td>
-
-                                <td>
-
-                                    <button
-                                        onClick={() =>
-                                            deleteBlock(block.id)
-                                        }
-                                        className="button button--danger"
-                                    >
-                                        Delete
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        ))}
-
-                    </tbody>
-
-                </table>
-
-            </TableContainer>
-
-        </MainLayout>
-    );
+                <td>
+                  <button
+                    onClick={() => deleteBlock(block.id)}
+                    className="button button--danger"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </TableContainer>
+    </MainLayout>
+  );
 }
 
 export default BlocksPage;
