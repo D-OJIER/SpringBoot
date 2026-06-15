@@ -1,63 +1,41 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 function LoginPage() {
-
     const [username, setUsername] = useState("");
-
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-
         e.preventDefault();
 
         try {
+            const response = await api.post("/auth/login", {
+                username,
+                password,
+            });
 
-            const response =
-                await api.post(
-                    "/auth/login",
-                    {
-                        username,
-                        password
-                    }
-                );
+            localStorage.setItem("token", response.data.token);
 
-            localStorage.setItem(
-                "token",
-                response.data.token
-            );
-
-            window.location.href = "/";
+            navigate("/", { replace: true });
 
         } catch (error) {
-
             console.error(error);
-
-            alert(error.response.data.message);
+            alert(error.response?.data?.message ?? "Login failed. Please try again.");
         }
     };
 
     return (
-
         <div className="login-page">
-
-            <form
-                onSubmit={handleLogin}
-                className="card login-card"
-            >
-
-                <h1 className="login-title">
-                    Login
-                </h1>
+            <form onSubmit={handleLogin} className="card login-card">
+                <h1 className="login-title">Login</h1>
 
                 <input
                     type="text"
                     placeholder="Username"
                     value={username}
-                    onChange={(e) =>
-                        setUsername(e.target.value)
-                    }
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                     className="form-control"
                 />
@@ -66,22 +44,15 @@ function LoginPage() {
                     type="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className="form-control"
                 />
 
-                <button
-                    type="submit"
-                    className="button"
-                >
+                <button type="submit" className="button">
                     Login
                 </button>
-
             </form>
-
         </div>
     );
 }
