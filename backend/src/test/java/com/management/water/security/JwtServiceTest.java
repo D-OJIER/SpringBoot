@@ -1,4 +1,4 @@
-package com.management.water.security.jwt;
+package com.management.water.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

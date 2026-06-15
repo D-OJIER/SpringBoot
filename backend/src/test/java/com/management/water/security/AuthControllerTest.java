@@ -1,4 +1,4 @@
-package com.management.water.security.controller;
+package com.management.water.security;
 
 import com.management.water.modules.common.exception.ApiException;
 import com.management.water.security.dto.LoginRequest;
