@@ -1,5 +1,6 @@
 package com.management.water.security;
 
+import com.management.water.security.jwt.JwtService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

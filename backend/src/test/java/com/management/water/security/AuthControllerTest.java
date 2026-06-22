@@ -1,5 +1,6 @@
 package com.management.water.security;
 
+import com.management.water.security.controller.AuthController;
 import com.management.water.modules.common.exception.ApiException;
 import com.management.water.security.dto.LoginRequest;
 import com.management.water.security.entity.Role;
