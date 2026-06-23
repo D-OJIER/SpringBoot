@@ -6,11 +6,13 @@ import com.management.water.modules.waterconfig.service.WaterSourceService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/water-sources")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class WaterSourceController {
 
   private final WaterSourceService service;

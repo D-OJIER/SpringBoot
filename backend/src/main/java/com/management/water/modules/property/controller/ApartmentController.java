@@ -8,11 +8,13 @@ import com.management.water.modules.property.service.ApartmentService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/apartments")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class ApartmentController {
 
   private final ApartmentService service;

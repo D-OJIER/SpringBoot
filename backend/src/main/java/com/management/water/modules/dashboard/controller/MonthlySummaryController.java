@@ -5,11 +5,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/monthly-summary")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class MonthlySummaryController {
 
   private final DashboardService dashboardService;

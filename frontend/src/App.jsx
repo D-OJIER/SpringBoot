@@ -10,6 +10,7 @@ import ApartmentTypesPage from "./pages/ApartmentTypesPage";
 import BlocksPage from "./pages/BlocksPage";
 import SourceConfigsPage from "./pages/SourceConfigsPage";
 import MonthlySummaryPage from "./pages/MonthlySummaryPage";
+import UsersPage from "./pages/UsersPage"; // <-- ADDED
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -96,6 +97,15 @@ function App() {
         element={
           <ProtectedRoute>
             <MonthlySummaryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <UsersPage />
           </ProtectedRoute>
         }
       />

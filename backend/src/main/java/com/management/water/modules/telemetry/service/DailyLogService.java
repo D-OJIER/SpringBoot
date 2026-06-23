@@ -95,7 +95,13 @@ public class DailyLogService {
   }
 
   public Page<DailyLog> getPage(
-      int page, int size, String apartmentNumber, LocalDate fromDate, LocalDate toDate) {
+      int page,
+      int size,
+      String apartmentNumber,
+      LocalDate fromDate,
+      LocalDate toDate,
+      String sortBy,
+      String sortDir) {
     validatePagination(page, size);
 
     if (securityUtils.isCurrentUserResident()) {
@@ -106,9 +112,16 @@ public class DailyLogService {
     }
 
     DateRange dateRange = resolveDateRange(fromDate, toDate);
+
+    // Validate sort fields to prevent sql issues
+    List<String> allowedSortFields = List.of("logDate", "totalLitresConsumed", "dayCost", "guestCount");
+    String effectiveSortBy = allowedSortFields.contains(sortBy) ? sortBy : "logDate";
+    
+    Sort.Direction direction = "ASC".equalsIgnoreCase(sortDir) ? Sort.Direction.ASC : Sort.Direction.DESC;
+
     Pageable pageable =
         PageRequest.of(
-            page, Math.min(size, MAX_PAGE_SIZE), Sort.by(Sort.Direction.DESC, "logDate"));
+            page, Math.min(size, MAX_PAGE_SIZE), Sort.by(direction, effectiveSortBy));
     return repository.findAll(
         createFilterSpecification(apartmentNumber, dateRange.fromDate(), dateRange.toDate()),
         pageable);

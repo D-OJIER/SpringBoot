@@ -9,11 +9,29 @@ import {
   validateDateRange,
 } from "../utils/dateRange";
 
+function getUserRole() {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  try {
+    const payload = token.split(".")[1];
+    if (!payload) return null;
+    let base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+    while (base64.length % 4) base64 += "=";
+    const json = atob(base64);
+    const data = JSON.parse(json);
+    return data.role;
+  } catch (e) {
+    return null;
+  }
+}
+
 function DailyLogsPage() {
   const [logs, setLogs] = useState([]);
   const [filters, setFilters] = useState({
     apartmentNumber: "",
     ...getDefaultDateRange(),
+    sortBy: "logDate",
+    sortDir: "DESC",
   });
   const [appliedFilters, setAppliedFilters] = useState(filters);
   const [page, setPage] = useState(0);
@@ -21,6 +39,9 @@ function DailyLogsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const role = getUserRole();
+  const isAdmin = role === "ADMIN";
 
   useEffect(() => {
     async function loadLogs() {
@@ -61,6 +82,32 @@ function DailyLogsPage() {
     setAppliedFilters(filters);
   };
 
+  const handleSortChange = (event) => {
+    const newSortBy = event.target.value;
+    setFilters((prev) => ({
+      ...prev,
+      sortBy: newSortBy,
+    }));
+    setPage(0);
+    setAppliedFilters((prev) => ({
+      ...prev,
+      sortBy: newSortBy,
+    }));
+  };
+
+  const handleSortDirChange = (event) => {
+    const newSortDir = event.target.value;
+    setFilters((prev) => ({
+      ...prev,
+      sortDir: newSortDir,
+    }));
+    setPage(0);
+    setAppliedFilters((prev) => ({
+      ...prev,
+      sortDir: newSortDir,
+    }));
+  };
+
   const handleCreated = () => {
     setLoading(true);
     setPage(0);
@@ -73,21 +120,23 @@ function DailyLogsPage() {
         <h1 className="page-title">Daily Logs</h1>
       </header>
 
-      <AddDailyLogForm onSuccess={handleCreated} />
+      {isAdmin && <AddDailyLogForm onSuccess={handleCreated} />}
 
-      <form className="filter-bar" onSubmit={applyFilters}>
-        <input
-          className="form-control"
-          type="search"
-          placeholder="Apartment number"
-          value={filters.apartmentNumber}
-          onChange={(event) =>
-            setFilters({
-              ...filters,
-              apartmentNumber: event.target.value,
-            })
-          }
-        />
+      <form className="filter-bar filter-bar--logs" onSubmit={applyFilters}>
+        {isAdmin && (
+          <input
+            className="form-control"
+            type="search"
+            placeholder="Apartment number"
+            value={filters.apartmentNumber}
+            onChange={(event) =>
+              setFilters({
+                ...filters,
+                apartmentNumber: event.target.value,
+              })
+            }
+          />
+        )}
         <input
           className="form-control"
           type="date"
@@ -117,6 +166,26 @@ function DailyLogsPage() {
           }
           required
         />
+        <select
+          className="form-control"
+          aria-label="Sort by"
+          value={filters.sortBy}
+          onChange={handleSortChange}
+        >
+          <option value="logDate">Sort: Date</option>
+          <option value="dayCost">Sort: Cost</option>
+          <option value="totalLitresConsumed">Sort: Usage</option>
+          <option value="guestCount">Sort: Guest Count</option>
+        </select>
+        <select
+          className="form-control"
+          aria-label="Sort direction"
+          value={filters.sortDir}
+          onChange={handleSortDirChange}
+        >
+          <option value="DESC">Descending</option>
+          <option value="ASC">Ascending</option>
+        </select>
         <button className="button" type="submit">
           <Search size={18} />
           Apply

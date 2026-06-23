@@ -35,7 +35,9 @@ public class DailyLogController {
       @RequestParam(defaultValue = "20") int size,
       @RequestParam(required = false) String apartmentNumber,
       @RequestParam(required = false) LocalDate fromDate,
-      @RequestParam(required = false) LocalDate toDate) {
-    return service.getPage(page, size, apartmentNumber, fromDate, toDate);
+      @RequestParam(required = false) LocalDate toDate,
+      @RequestParam(defaultValue = "logDate") String sortBy,
+      @RequestParam(defaultValue = "DESC") String sortDir) {
+    return service.getPage(page, size, apartmentNumber, fromDate, toDate, sortBy, sortDir);
   }
 }

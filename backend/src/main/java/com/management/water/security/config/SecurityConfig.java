@@ -4,6 +4,7 @@ import com.management.water.security.jwt.JwtAuthenticationFilter;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
   private final JwtAuthenticationFilter jwtFilter;
@@ -38,10 +40,6 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers("/daily-logs/**")
                     .permitAll()
-                    .requestMatchers("/monthly-summary/**")
-                    .hasRole("ADMIN")
-                    .requestMatchers("/water-rates/**", "/water-sources/**", "/apartments/**")
-                    .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

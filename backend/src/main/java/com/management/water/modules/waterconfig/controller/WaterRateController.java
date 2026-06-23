@@ -7,11 +7,13 @@ import com.management.water.modules.waterconfig.service.WaterRateService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/water-rates")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class WaterRateController {
 
   private final WaterRateService service;
