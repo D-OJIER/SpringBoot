@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.DistributionSummary;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +30,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class DailyLogService {
 
   private static final int MAX_PAGE_SIZE = 100;
@@ -39,6 +41,38 @@ public class DailyLogService {
   private final ApartmentRepository apartmentRepository;
   private final BillingService billingService;
   private final SecurityUtils securityUtils;
+
+  // Custom Micrometer Metrics
+  private final Counter logCreationCounter;
+  private final DistributionSummary waterConsumptionSummary;
+
+  public DailyLogService(
+      SlabMonthlySummaryRepository summaryRepository,
+      DailyLogSourceBreakdownRepository breakdownRepository,
+      DailyLogRepository repository,
+      ApartmentRepository apartmentRepository,
+      BillingService billingService,
+      SecurityUtils securityUtils,
+      MeterRegistry meterRegistry) {
+    this.summaryRepository = summaryRepository;
+    this.breakdownRepository = breakdownRepository;
+    this.repository = repository;
+    this.apartmentRepository = apartmentRepository;
+    this.billingService = billingService;
+    this.securityUtils = securityUtils;
+
+    // tracks the total number of logs created
+    this.logCreationCounter = Counter.builder("water.logs.created")
+        .description("Number of daily water logs submitted")
+        .tag("module", "telemetry")
+        .register(meterRegistry);
+
+    // tracks distribution sizes (like litres consumed)
+    this.waterConsumptionSummary = DistributionSummary.builder("water.litres.consumed")
+        .description("Track distribution of litres consumed per log")
+        .baseUnit("litres")
+        .register(meterRegistry);
+  }
 
   public DailyLog create(DailyLog log) {
 
@@ -59,7 +93,14 @@ public class DailyLogService {
     double cost = billingService.calculateDailyCost(savedLog);
     savedLog.setDayCost(cost);
     updateMonthlySummary(savedLog);
-    return repository.save(savedLog);
+    
+    DailyLog finalLog = repository.save(savedLog);
+    
+    // Record Metrics
+    logCreationCounter.increment();
+    waterConsumptionSummary.record(finalLog.getTotalLitresConsumed());
+
+    return finalLog;
   }
 
   private void updateMonthlySummary(DailyLog log) {

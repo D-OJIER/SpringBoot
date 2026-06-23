@@ -36,7 +36,7 @@ public class SecurityConfig {
             auth ->
                 auth.requestMatchers("/auth/**")
                     .permitAll()
-                    .requestMatchers("/actuator/health", "/actuator/info")
+                    .requestMatchers("/actuator/**")
                     .permitAll()
                     .requestMatchers("/daily-logs/**")
                     .permitAll()
