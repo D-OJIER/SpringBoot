@@ -36,6 +36,8 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers("/actuator/health", "/actuator/info")
                     .permitAll()
+                    .requestMatchers("/daily-logs/**")
+                    .permitAll()
                     .requestMatchers("/monthly-summary/**")
                     .hasRole("ADMIN")
                     .requestMatchers("/water-rates/**", "/water-sources/**", "/apartments/**")
