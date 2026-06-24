@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db_mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: water_management
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: spring_backend
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:mysql://db:3306/water_management?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: rootpass
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: admin123
+      API_KEY_SECRET: 46fe3e1824e0ca081444eff72a76e443fae4bee6524f97ecbbd7ae1c36e98b55
+
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    ports:
+      - "8084:8084"
+    depends_on:
+      - backend
+
+  prometheus:
+    image: prom/prometheus:v2.50.1
+    container_name: prometheus
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./docker/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./docker/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

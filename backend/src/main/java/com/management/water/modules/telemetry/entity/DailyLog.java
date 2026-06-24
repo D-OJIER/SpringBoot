@@ -24,7 +24,7 @@ public class DailyLog {
 
   private int guestCount;
 
-  private double dayCost; // will calculate later
+  private double dayCost;
 
   @ManyToOne
   @JoinColumn(name = "apartment_id")

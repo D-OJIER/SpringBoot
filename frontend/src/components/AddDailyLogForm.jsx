@@ -40,9 +40,7 @@ function AddDailyLogForm({ onSuccess }) {
         logDate: formData.logDate,
         totalLitresConsumed: Number(formData.totalLitresConsumed),
         guestCount: Number(formData.guestCount),
-        apartment: {
-          id: Number(formData.apartmentId),
-        },
+        apartmentId: Number(formData.apartmentId),
       });
 
       alert("Daily Log Added");

@@ -70,7 +70,6 @@ public class DailyLogService {
     // tracks distribution sizes (like litres consumed)
     this.waterConsumptionSummary = DistributionSummary.builder("water.litres.consumed")
         .description("Track distribution of litres consumed per log")
-        .baseUnit("litres")
         .register(meterRegistry);
   }
 
