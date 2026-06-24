@@ -60,5 +60,18 @@ services:
       - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
     restart: unless-stopped
 
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    user: "0"
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - /run/user/1000/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
 volumes:
   mysql_data:
+  portainer_data:
