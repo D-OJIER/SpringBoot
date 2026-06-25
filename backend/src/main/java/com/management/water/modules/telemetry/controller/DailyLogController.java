@@ -19,13 +19,12 @@ public class DailyLogController {
 
   @PostMapping
   public DailyLog create(@Valid @RequestBody DailyLogCreateRequest request) {
-    DailyLog log = new DailyLog();
-    log.setLogDate(request.getLogDate());
-    log.setTotalLitresConsumed(request.getTotalLitresConsumed());
-    log.setGuestCount(request.getGuestCount());
-    Apartment apartment = new Apartment();
-    apartment.setId(request.getApartmentId());
-    log.setApartment(apartment);
+    DailyLog log = DailyLog.builder()
+            .logDate(request.getLogDate())
+            .totalLitresConsumed(request.getTotalLitresConsumed())
+            .guestCount(request.getGuestCount())
+            .apartment(Apartment.builder().id(request.getApartmentId()).build())
+            .build();
     return service.create(log);
   }
 

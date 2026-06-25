@@ -21,14 +21,11 @@ public class ApartmentController {
 
   @PostMapping
   public Apartment create(@Valid @RequestBody ApartmentCreateRequest request) {
-    Apartment apartment = new Apartment();
-    apartment.setNumber(request.getNumber());
-    Block block = new Block();
-    block.setId(request.getBlockId());
-    apartment.setBlock(block);
-    ApartmentType type = new ApartmentType();
-    type.setId(request.getTypeId());
-    apartment.setType(type);
+    Apartment apartment = Apartment.builder()
+            .number(request.getNumber())
+            .block(Block.builder().id(request.getBlockId()).build())
+            .type(ApartmentType.builder().id(request.getTypeId()).build())
+            .build();
     return service.create(apartment);
   }
 

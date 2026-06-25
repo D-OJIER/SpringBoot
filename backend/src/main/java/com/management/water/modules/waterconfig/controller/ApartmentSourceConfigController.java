@@ -20,16 +20,16 @@ public class ApartmentSourceConfigController {
   @PostMapping
   public ApartmentSourceConfig create(
       @Valid @RequestBody ApartmentSourceConfigCreateRequest request) {
-    ApartmentSourceConfig config = new ApartmentSourceConfig();
-    config.setRatioPercent(request.getRatioPercent());
-    Apartment apartment = new Apartment();
-    apartment.setId(request.getApartmentId());
-    config.setApartment(apartment);
-    WaterSource source = new WaterSource();
-    source.setId(request.getSourceId());
-    config.setSource(source);
+      
+    ApartmentSourceConfig config = ApartmentSourceConfig.builder()
+        .ratioPercent(request.getRatioPercent())
+        .apartment(Apartment.builder().id(request.getApartmentId()).build())
+        .source(WaterSource.builder().id(request.getSourceId()).build())
+        .build();
+
     return service.create(config);
   }
+
 
   @GetMapping
   public List<ApartmentSourceConfig> getAll() {

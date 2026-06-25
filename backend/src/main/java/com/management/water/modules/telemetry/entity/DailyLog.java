@@ -4,6 +4,9 @@ import com.management.water.modules.property.entity.Apartment;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(
@@ -12,6 +15,9 @@ import lombok.Data;
       @Index(name = "idx_daily_log_apartment_date", columnList = "apartment_id, log_date")
     })
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class DailyLog {
 
   @Id

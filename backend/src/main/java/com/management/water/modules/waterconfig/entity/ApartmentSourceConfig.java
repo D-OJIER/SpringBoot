@@ -3,9 +3,15 @@ package com.management.water.modules.waterconfig.entity;
 import com.management.water.modules.property.entity.Apartment;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApartmentSourceConfig {
 
   @Id

@@ -3,9 +3,15 @@ package com.management.water.modules.waterconfig.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import lombok.Data;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WaterRate {
 
   @Id

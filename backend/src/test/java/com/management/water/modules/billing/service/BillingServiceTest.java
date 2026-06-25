@@ -42,37 +42,43 @@ class BillingServiceTest {
   @BeforeEach
   void setup() {
 
-    ApartmentType apartmentType = new ApartmentType();
-    apartmentType.setBaseOccupancy(4);
-    apartmentType.setLitresPerPerson(135.0);
+    ApartmentType apartmentType = ApartmentType.builder()
+        .baseOccupancy(4)
+        .litresPerPerson(135.0)
+        .build();
 
-    Apartment apartment = new Apartment();
-    apartment.setId(1L);
-    apartment.setType(apartmentType);
+    Apartment apartment = Apartment.builder()
+        .id(1L)
+        .type(apartmentType)
+        .build();
 
-    dailyLog = new DailyLog();
-    dailyLog.setApartment(apartment);
-    dailyLog.setGuestCount(1);
-    dailyLog.setTotalLitresConsumed(1000.0);
-    dailyLog.setLogDate(LocalDate.now());
+    dailyLog = DailyLog.builder()
+        .apartment(apartment)
+        .guestCount(1)
+        .totalLitresConsumed(1000.0)
+        .logDate(LocalDate.now())
+        .build();
 
-    source = new WaterSource();
-    source.setId(1L);
+    source = WaterSource.builder()
+        .id(1L)
+        .build();
   }
 
   @Test
   void shouldCalculateDailyCostSuccessfully() {
 
-    ApartmentSourceConfig config = new ApartmentSourceConfig();
-    config.setRatioPercent(100.0);
-    config.setSource(source);
+    ApartmentSourceConfig config = ApartmentSourceConfig.builder()
+        .ratioPercent(100.0)
+        .source(source)
+        .build();
 
     when(configRepository.findByApartmentId(1L)).thenReturn(List.of(config));
 
-    WaterRate rate = new WaterRate();
-    rate.setMinLitres(0);
-    rate.setMaxLitres(2000);
-    rate.setRatePerLitre(2.0);
+    WaterRate rate = WaterRate.builder()
+        .minLitres(0)
+        .maxLitres(2000)
+        .ratePerLitre(2.0)
+        .build();
 
     when(rateRepository
             .findBySourceIdAndEffectiveFromLessThanEqualAndEffectiveToGreaterThanEqualOrderByMinLitresAsc(
@@ -108,9 +114,10 @@ class BillingServiceTest {
   @Test
   void shouldThrowExceptionWhenNoRatesFound() {
 
-    ApartmentSourceConfig config = new ApartmentSourceConfig();
-    config.setRatioPercent(100.0);
-    config.setSource(source);
+    ApartmentSourceConfig config = ApartmentSourceConfig.builder()
+        .ratioPercent(100.0)
+        .source(source)
+        .build();
 
     when(configRepository.findByApartmentId(1L)).thenReturn(List.of(config));
 
