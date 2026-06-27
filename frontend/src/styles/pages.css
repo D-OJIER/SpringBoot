@@ -1,0 +1,195 @@
+/* ================================
+   PAGE HEADER
+================================ */
+
+.page-header {
+  margin-bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ================================
+   PAGE TITLE
+================================ */
+
+.page-title {
+  margin: 0;
+
+  font-size: clamp(2rem, 2.6vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+
+  font-weight: 700;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  color: var(--on-surface);
+}
+
+/* Optional subtitle support */
+
+.page-subtitle {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 24px;
+
+  color: var(--on-surface-variant);
+
+  max-width: 720px;
+}
+
+/* ================================
+   STATS GRID
+================================ */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+/* ================================
+   LOGIN PAGE
+================================ */
+
+.login-page {
+  min-height: 100vh;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(0, 93, 182, 0.1),
+      transparent 28rem
+    ),
+    linear-gradient(135deg, rgba(0, 71, 141, 0.04), rgba(0, 110, 55, 0.03)),
+    var(--background);
+
+  overflow: hidden;
+}
+
+/* ================================
+   LOGIN CARD
+================================ */
+
+.login-card {
+  width: min(100%, 420px);
+
+  padding: 32px;
+
+  background: var(--surface-container-lowest);
+
+  border: 1px solid var(--outline-variant);
+
+  border-radius: 1rem;
+
+  box-shadow: var(--shadow-lg);
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.login-card:hover {
+  border-color: var(--outline);
+
+  box-shadow: 0 24px 48px rgba(25, 28, 30, 0.1);
+
+  transform: translateY(-2px);
+}
+
+/* ================================
+   LOGIN TITLE
+================================ */
+
+.login-title {
+  margin: 0 0 22px;
+
+  font-size: 24px;
+  line-height: 32px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+
+  color: var(--on-surface);
+}
+
+/* ================================
+   LOGIN FORM SPACING
+================================ */
+
+.login-card .form-control {
+  margin-bottom: 14px;
+}
+
+.login-card .button {
+  width: 100%;
+  margin-top: 6px;
+}
+
+/* ================================
+   OPTIONAL LOGIN META
+================================ */
+
+.login-meta {
+  margin-top: 18px;
+
+  text-align: center;
+
+  font-size: 14px;
+  line-height: 20px;
+
+  color: var(--on-surface-variant);
+}
+
+.login-meta a {
+  color: var(--primary);
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: opacity 160ms ease;
+}
+
+.login-meta a:hover {
+  opacity: 0.8;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 960px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-page {
+    padding: 20px;
+  }
+
+  .login-card {
+    padding: 24px;
+    border-radius: 0.75rem;
+  }
+
+  .page-title {
+    font-size: clamp(1.8rem, 8vw, 2.3rem);
+  }
+}
