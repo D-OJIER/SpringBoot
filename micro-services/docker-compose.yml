@@ -72,5 +72,43 @@ services:
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
       PROPERTY_SERVICE_URL: http://property-service:8082
 
+  telemetry-service:
+    build:
+      context: .
+      dockerfile: telemetry-service/Dockerfile
+    container_name: telemetry_service
+    ports:
+      - "8084:8084"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - telemetry-service/.env
+    environment:
+      DB_URL: jdbc:mysql://db:3306/water_telemetry?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: rootpass
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      PROPERTY_SERVICE_URL: http://property-service:8082
+      WATERCONFIG_SERVICE_URL: http://waterconfig-service:8083
+      AUTH_SERVICE_URL: http://auth-service:8081
+
+  reporting-service:
+    build:
+      context: .
+      dockerfile: reporting-service/Dockerfile
+    container_name: reporting_service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - telemetry-service
+      - auth-service
+    env_file:
+      - reporting-service/.env
+    environment:
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      TELEMETRY_SERVICE_URL: http://telemetry-service:8084
+      AUTH_SERVICE_URL: http://auth-service:8081
+
 volumes:
   mysql_micro_data:

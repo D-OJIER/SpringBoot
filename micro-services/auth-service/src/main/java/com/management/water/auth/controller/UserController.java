@@ -56,6 +56,15 @@ public class UserController {
         .collect(Collectors.toList());
   }
 
+  @GetMapping("/username/{username}")
+  @PreAuthorize("isAuthenticated()")
+  public UserResponse getUserByUsername(@PathVariable String username) {
+    return userRepository
+        .findByUsername(username)
+        .map(this::toResponse)
+        .orElseThrow(() -> new ApiException.NotFoundException("User not found"));
+  }
+
   @GetMapping("/{id}")
   public UserResponse getUserById(@PathVariable Long id) {
     return userRepository

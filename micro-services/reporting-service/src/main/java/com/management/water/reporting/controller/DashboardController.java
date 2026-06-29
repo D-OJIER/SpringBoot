@@ -1,0 +1,28 @@
+package com.management.water.reporting.controller;
+
+import com.management.water.reporting.service.DashboardService;
+import java.time.LocalDate;
+import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/dashboard")
+@RequiredArgsConstructor
+public class DashboardController {
+
+  private final DashboardService dashboardService;
+
+  @GetMapping("/stats")
+  @PreAuthorize("isAuthenticated()")
+  public Map<String, Object> getStats(
+      @RequestParam(name = "apartmentNumber", required = false) String apartmentNumber,
+      @RequestParam(name = "fromDate", required = false) LocalDate fromDate,
+      @RequestParam(name = "toDate", required = false) LocalDate toDate) {
+    return dashboardService.getStats(apartmentNumber, fromDate, toDate);
+  }
+}
