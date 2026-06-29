@@ -1,6 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri Jun 26 15:42:52 IST 2026
-@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1782468772318
+#Mon Jun 29 09:44:58 IST 2026
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1782706498579
 @default-prepopulated-mirror-file\:///usr/share/maven/lib/m2/repository/.lastUpdated=1782467269677
 file\:///usr/share/maven/lib/m2/repository/.error=Could not transfer artifact org.springframework.boot\:spring-boot-dependencies\:pom\:3.5.0 from/to prepopulated-mirror (file\:///usr/share/maven/lib/m2/repository)\: Repository path /usr/share/maven/lib/m2/repository does not exist, and cannot be created.
 https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.springframework.boot\:spring-boot-dependencies\:pom\:3.5.0 from/to central (https\://repo.maven.apache.org/maven2)\: Transfer failed for https\://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-dependencies/3.5.0/spring-boot-dependencies-3.5.0.pom
