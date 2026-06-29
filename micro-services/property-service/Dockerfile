@@ -3,7 +3,8 @@ FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY property-service ./property-service
-RUN mvn clean package -pl property-service -DskipTests
+WORKDIR /app/property-service
+RUN mvn clean package -DskipTests
 
 # Run phase
 FROM eclipse-temurin:17-jre
