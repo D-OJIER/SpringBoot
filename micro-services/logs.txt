@@ -1,0 +1,130 @@
+Attaching to gateway_service
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m   .   ____          _            __ _ _
+[36mgateway_service        |[0m  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[36mgateway_service        |[0m ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[36mgateway_service        |[0m  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[36mgateway_service        |[0m   '  |____| .__|_| |_|_| |_\__, | / / / /
+[36mgateway_service        |[0m  =========|_|==============|___/=/_/_/_/
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m  :: Spring Boot ::                (v3.4.7)
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m 2026-06-30T04:51:15.154Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Starting GatewayServiceApplication using Java 17.0.19 with PID 1 (/app/app.jar started by root in /app)
+[36mgateway_service        |[0m 2026-06-30T04:51:15.160Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+[36mgateway_service        |[0m 2026-06-30T04:51:17.678Z  INFO 1 --- [gateway-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=1bcc6a4f-d65f-3a21-ba38-8cb21a0f638e
+[36mgateway_service        |[0m 2026-06-30T04:51:19.706Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.707Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.707Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.707Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.708Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.708Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.708Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.708Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.708Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+[36mgateway_service        |[0m 2026-06-30T04:51:19.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[36mgateway_service        |[0m 2026-06-30T04:51:20.379Z  INFO 1 --- [gateway-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+[36mgateway_service        |[0m 2026-06-30T04:51:21.003Z  WARN 1 --- [gateway-service] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[36mgateway_service        |[0m 2026-06-30T04:51:21.314Z  INFO 1 --- [gateway-service] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8090 (http)
+[36mgateway_service        |[0m 2026-06-30T04:51:21.512Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Started GatewayServiceApplication in 7.914 seconds (process running for 9.15)
+[36mgateway_service        |[0m 2026-06-30T04:52:49.116Z  INFO 1 --- [gateway-service] [ionShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+[36mgateway_service        |[0m 2026-06-30T04:52:49.124Z  INFO 1 --- [gateway-service] [ netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m   .   ____          _            __ _ _
+[36mgateway_service        |[0m  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[36mgateway_service        |[0m ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[36mgateway_service        |[0m  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[36mgateway_service        |[0m   '  |____| .__|_| |_|_| |_\__, | / / / /
+[36mgateway_service        |[0m  =========|_|==============|___/=/_/_/_/
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m  :: Spring Boot ::                (v3.4.7)
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m 2026-06-30T04:53:07.791Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Starting GatewayServiceApplication using Java 17.0.19 with PID 1 (/app/app.jar started by root in /app)
+[36mgateway_service        |[0m 2026-06-30T04:53:07.809Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+[36mgateway_service        |[0m 2026-06-30T04:53:12.866Z  INFO 1 --- [gateway-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=1bcc6a4f-d65f-3a21-ba38-8cb21a0f638e
+[36mgateway_service        |[0m 2026-06-30T04:53:23.582Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.586Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.587Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.588Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.588Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.588Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.588Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+[36mgateway_service        |[0m 2026-06-30T04:53:23.602Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[36mgateway_service        |[0m 2026-06-30T04:53:27.170Z  INFO 1 --- [gateway-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m   .   ____          _            __ _ _
+[36mgateway_service        |[0m  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[36mgateway_service        |[0m ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[36mgateway_service        |[0m  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[36mgateway_service        |[0m   '  |____| .__|_| |_|_| |_\__, | / / / /
+[36mgateway_service        |[0m  =========|_|==============|___/=/_/_/_/
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m  :: Spring Boot ::                (v3.4.7)
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m 2026-06-30T04:54:01.128Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Starting GatewayServiceApplication using Java 17.0.19 with PID 1 (/app/app.jar started by root in /app)
+[36mgateway_service        |[0m 2026-06-30T04:54:01.142Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+[36mgateway_service        |[0m 2026-06-30T04:54:06.082Z  INFO 1 --- [gateway-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=1bcc6a4f-d65f-3a21-ba38-8cb21a0f638e
+[36mgateway_service        |[0m 2026-06-30T04:54:13.486Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.490Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.497Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.497Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.497Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.497Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.498Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+[36mgateway_service        |[0m 2026-06-30T04:54:13.499Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[36mgateway_service        |[0m 2026-06-30T04:54:16.231Z  INFO 1 --- [gateway-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+[36mgateway_service        |[0m 2026-06-30T04:54:19.732Z  WARN 1 --- [gateway-service] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[36mgateway_service        |[0m 2026-06-30T04:54:21.182Z  INFO 1 --- [gateway-service] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8090 (http)
+[36mgateway_service        |[0m 2026-06-30T04:54:21.865Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Started GatewayServiceApplication in 22.116 seconds (process running for 23.819)
+[36mgateway_service        |[0m 2026-06-30T04:54:40.840Z  INFO 1 --- [gateway-service] [or-http-epoll-2] c.m.w.gateway.filter.JwtGlobalFilter     : Gateway received request for path: /auth/login
+[36mgateway_service        |[0m 2026-06-30T04:54:41.362Z  WARN 1 --- [gateway-service] [or-http-epoll-2] o.s.c.l.core.RoundRobinLoadBalancer      : No servers available for service: auth-service
+[36mgateway_service        |[0m 2026-06-30T04:54:52.251Z  INFO 1 --- [gateway-service] [ionShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+[36mgateway_service        |[0m 2026-06-30T04:54:52.265Z  INFO 1 --- [gateway-service] [ netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m   .   ____          _            __ _ _
+[36mgateway_service        |[0m  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[36mgateway_service        |[0m ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[36mgateway_service        |[0m  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[36mgateway_service        |[0m   '  |____| .__|_| |_|_| |_\__, | / / / /
+[36mgateway_service        |[0m  =========|_|==============|___/=/_/_/_/
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m  :: Spring Boot ::                (v3.4.7)
+[36mgateway_service        |[0m 
+[36mgateway_service        |[0m 2026-06-30T04:55:02.796Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Starting GatewayServiceApplication using Java 17.0.19 with PID 1 (/app/app.jar started by root in /app)
+[36mgateway_service        |[0m 2026-06-30T04:55:02.803Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : No active profile set, falling back to 1 default profile: "default"
+[36mgateway_service        |[0m 2026-06-30T04:55:06.165Z  INFO 1 --- [gateway-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=1bcc6a4f-d65f-3a21-ba38-8cb21a0f638e
+[36mgateway_service        |[0m 2026-06-30T04:55:13.696Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.709Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.709Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.709Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.709Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.710Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.711Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.711Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+[36mgateway_service        |[0m 2026-06-30T04:55:13.711Z  INFO 1 --- [gateway-service] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[36mgateway_service        |[0m 2026-06-30T04:55:16.407Z  INFO 1 --- [gateway-service] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+[36mgateway_service        |[0m 2026-06-30T04:55:18.711Z  WARN 1 --- [gateway-service] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[36mgateway_service        |[0m 2026-06-30T04:55:19.991Z  INFO 1 --- [gateway-service] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8090 (http)
+[36mgateway_service        |[0m 2026-06-30T04:55:20.734Z  INFO 1 --- [gateway-service] [           main] c.m.w.gateway.GatewayServiceApplication  : Started GatewayServiceApplication in 19.336 seconds (process running for 20.815)
+[36mgateway_service        |[0m 2026-06-30T04:56:41.986Z  INFO 1 --- [gateway-service] [or-http-epoll-2] c.m.w.gateway.filter.JwtGlobalFilter     : Gateway received request for path: /auth/login
+[36mgateway_service        |[0m 2026-06-30T04:56:42.053Z  WARN 1 --- [gateway-service] [or-http-epoll-2] o.s.c.l.core.RoundRobinLoadBalancer      : No servers available for service: auth-service

@@ -3,20 +3,22 @@ package com.management.water.auth.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-/**
- * JWT utility service — identical logic to the monolith's JwtService.
- * Lives in auth-service and is the single source of JWT generation.
- * Other services validate tokens locally using the same shared secret.
- */
 @Service
 public class JwtService {
 
   @Value("${jwt.secret}")
   private String secret;
+
+  private Key getSigningKey() {
+    byte[] keyBytes = io.jsonwebtoken.io.Decoders.BASE64.decode(secret);
+    return Keys.hmacShaKeyFor(keyBytes);
+  }
 
   public String generateToken(String username, String role) {
     return Jwts.builder()
@@ -24,7 +26,7 @@ public class JwtService {
         .claim("role", role)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
-        .signWith(SignatureAlgorithm.HS256, secret)
+        .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
   }
 
@@ -38,7 +40,7 @@ public class JwtService {
 
   public boolean isTokenValid(String token) {
     try {
-      Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+      Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
       return true;
     } catch (Exception e) {
       return false;
@@ -46,6 +48,6 @@ public class JwtService {
   }
 
   private Claims parseClaims(String token) {
-    return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
   }
 }

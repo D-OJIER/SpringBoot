@@ -206,7 +206,7 @@ function DailyLogsPage() {
       <div className="list-grid">
         {logs.map((log) => (
           <div key={log.id} className="list-card">
-            <h2 className="list-card__title">{log.apartment.number}</h2>
+            <h2 className="list-card__title">{log.apartmentNumber || `ID: ${log.apartmentId}`}</h2>
 
             <p>Date: {log.logDate}</p>
 

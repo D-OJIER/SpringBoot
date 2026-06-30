@@ -3,38 +3,152 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
-    container_name: db_mysql
+    container_name: db_micro_mysql
     ports:
-      - "3307:3306"
+      - "3308:3306"
     environment:
-      MYSQL_DATABASE: water_management
       MYSQL_ROOT_PASSWORD: rootpass
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_micro_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-prootpass" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
 
-  backend:
-    build: ./backend
-    container_name: spring_backend
+  auth-service:
+    build:
+      context: ./micro-services
+      dockerfile: auth-service/Dockerfile
+    container_name: auth_service
     ports:
-      - "8083:8083"
+      - "8081:8081"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    env_file:
+      - ./micro-services/auth-service/.env
     environment:
-      DB_URL: jdbc:mysql://db:3306/water_management?createDatabaseIfNotExist=true
+      DB_URL: jdbc:mysql://db:3306/water_auth?createDatabaseIfNotExist=true
       DB_USERNAME: root
       DB_PASSWORD: rootpass
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
-      ADMIN_USERNAME: admin
-      ADMIN_PASSWORD: admin123
-      API_KEY_SECRET: 46fe3e1824e0ca081444eff72a76e443fae4bee6524f97ecbbd7ae1c36e98b55
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
 
-  frontend:
-    build: ./frontend
-    container_name: react_frontend
+  property-service:
+    build:
+      context: ./micro-services
+      dockerfile: property-service/Dockerfile
+    container_name: property_service
+    ports:
+      - "8082:8082"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./micro-services/property-service/.env
+    environment:
+      DB_URL: jdbc:mysql://db:3306/water_property?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: rootpass
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+
+  waterconfig-service:
+    build:
+      context: ./micro-services
+      dockerfile: waterconfig-service/Dockerfile
+    container_name: waterconfig_service
+    ports:
+      - "8083:8083"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./micro-services/waterconfig-service/.env
+    environment:
+      DB_URL: jdbc:mysql://db:3306/water_config?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: rootpass
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      PROPERTY_SERVICE_URL: http://property-service:8082
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+
+  telemetry-service:
+    build:
+      context: ./micro-services
+      dockerfile: telemetry-service/Dockerfile
+    container_name: telemetry_service
     ports:
       - "8084:8084"
     depends_on:
-      - backend
+      db:
+        condition: service_healthy
+    env_file:
+      - ./micro-services/telemetry-service/.env
+    environment:
+      DB_URL: jdbc:mysql://db:3306/water_telemetry?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: rootpass
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      PROPERTY_SERVICE_URL: http://property-service:8082
+      WATERCONFIG_SERVICE_URL: http://waterconfig-service:8083
+      AUTH_SERVICE_URL: http://auth-service:8081
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+
+  reporting-service:
+    build:
+      context: ./micro-services
+      dockerfile: reporting-service/Dockerfile
+    container_name: reporting_service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - telemetry-service
+      - auth-service
+    env_file:
+      - ./micro-services/reporting-service/.env
+    environment:
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      TELEMETRY_SERVICE_URL: http://telemetry-service:8084
+      AUTH_SERVICE_URL: http://auth-service:8081
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+
+  discovery-service:
+    build:
+      context: ./micro-services
+      dockerfile: discovery-service/Dockerfile
+    container_name: discovery_service
+    ports:
+      - "8089:8089"
+
+  gateway-service:
+    build:
+      context: ./micro-services
+      dockerfile: gateway-service/Dockerfile
+    container_name: gateway_service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - discovery-service
+    environment:
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      AUTH_SERVICE_URL: http://auth-service:8081
+      PROPERTY_SERVICE_URL: http://property-service:8082
+      WATERCONFIG_SERVICE_URL: http://waterconfig-service:8083
+      TELEMETRY_SERVICE_URL: http://telemetry-service:8084
+      REPORTING_SERVICE_URL: http://reporting-service:8085
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: react_frontend
+    ports:
+      - "8091:8084"
+    depends_on:
+      - gateway-service
 
   prometheus:
     image: prom/prometheus:v2.50.1
@@ -73,5 +187,5 @@ services:
       - portainer_data:/data
 
 volumes:
-  mysql_data:
+  mysql_micro_data:
   portainer_data:

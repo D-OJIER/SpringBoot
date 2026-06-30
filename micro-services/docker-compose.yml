@@ -135,6 +135,20 @@ services:
     environment:
       EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      AUTH_SERVICE_URL: http://auth-service:8081
+      PROPERTY_SERVICE_URL: http://property-service:8082
+      WATERCONFIG_SERVICE_URL: http://waterconfig-service:8083
+      TELEMETRY_SERVICE_URL: http://telemetry-service:8084
+      REPORTING_SERVICE_URL: http://reporting-service:8085
+
+  frontend:
+    build:
+      context: ../frontend
+    container_name: react_frontend
+    ports:
+      - "8091:8084"
+    depends_on:
+      - gateway-service
 
 volumes:
   mysql_micro_data:

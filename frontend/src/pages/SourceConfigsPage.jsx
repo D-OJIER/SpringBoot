@@ -161,15 +161,18 @@ function SourceConfigsPage() {
           </thead>
 
           <tbody>
-            {configs.map((config) => (
-              <tr key={config.id}>
-                <td>{config.apartment.number}</td>
+            {configs.map((config) => {
+              const apartment = apartments.find((a) => a.id === config.apartmentId);
+              return (
+                <tr key={config.id}>
+                  <td>{apartment ? apartment.number : `ID: ${config.apartmentId}`}</td>
 
-                <td>{config.source.name}</td>
+                  <td>{config.source?.name || "Unknown"}</td>
 
-                <td>{config.ratioPercent}%</td>
-              </tr>
-            ))}
+                  <td>{config.ratioPercent}%</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </TableContainer>

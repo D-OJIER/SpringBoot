@@ -53,6 +53,8 @@ public class SecurityConfig {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.addAllowedOrigin("http://localhost:5173");
     configuration.addAllowedOrigin("http://localhost:8080"); // API Gateway
+    configuration.addAllowedOrigin("http://localhost:8091"); // Docker Frontend
+    configuration.addAllowedOrigin("http://localhost:8090"); // API Gateway (Actual)
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.addAllowedHeader("*");
     configuration.setAllowCredentials(true);

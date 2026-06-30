@@ -13,7 +13,13 @@ public class FeignConfig {
   @Bean
   public RequestInterceptor requestInterceptor() {
     return requestTemplate -> {
-      ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+      // Only add Authorization if not already set by @RequestHeader in the Feign client
+      if (requestTemplate.headers().containsKey("Authorization")) {
+        return;
+      }
+      // Fallback: try to get it from the current request context
+      ServletRequestAttributes attributes =
+          (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
       if (attributes != null) {
         HttpServletRequest request = attributes.getRequest();
         String authorizationHeader = request.getHeader("Authorization");

@@ -38,6 +38,11 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
 
         log.info("Gateway received request for path: {}", path);
 
+        // Skip validation for OPTIONS preflight requests
+        if (org.springframework.http.HttpMethod.OPTIONS.equals(request.getMethod())) {
+            return chain.filter(exchange);
+        }
+
         // 1. Skip validation for public endpoints
         if (isPublicEndpoint(path)) {
             return chain.filter(exchange);

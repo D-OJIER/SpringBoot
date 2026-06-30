@@ -6,25 +6,39 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:5173"
+              - "http://localhost:8091"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
       routes:
         - id: auth-service
-          uri: lb://auth-service
+          uri: ${AUTH_SERVICE_URL:lb://auth-service}
           predicates:
             - Path=/auth/**, /users/**
         - id: property-service
-          uri: lb://property-service
+          uri: ${PROPERTY_SERVICE_URL:lb://property-service}
           predicates:
             - Path=/apartments/**, /apartment-types/**, /blocks/**
         - id: waterconfig-service
-          uri: lb://waterconfig-service
+          uri: ${WATERCONFIG_SERVICE_URL:lb://waterconfig-service}
           predicates:
             - Path=/water-sources/**, /water-rates/**, /apartment-source-configs/**
         - id: telemetry-service
-          uri: lb://telemetry-service
+          uri: ${TELEMETRY_SERVICE_URL:lb://telemetry-service}
           predicates:
             - Path=/daily-logs/**
         - id: reporting-service
-          uri: lb://reporting-service
+          uri: ${REPORTING_SERVICE_URL:lb://reporting-service}
           predicates:
             - Path=/dashboard/**, /monthly-summary/**
 

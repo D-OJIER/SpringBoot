@@ -6,6 +6,7 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +21,10 @@ public class DashboardController {
   @GetMapping("/stats")
   @PreAuthorize("isAuthenticated()")
   public Map<String, Object> getStats(
+      @RequestHeader("Authorization") String authorizationHeader,
       @RequestParam(name = "apartmentNumber", required = false) String apartmentNumber,
       @RequestParam(name = "fromDate", required = false) LocalDate fromDate,
       @RequestParam(name = "toDate", required = false) LocalDate toDate) {
-    return dashboardService.getStats(apartmentNumber, fromDate, toDate);
+    return dashboardService.getStats(authorizationHeader, apartmentNumber, fromDate, toDate);
   }
 }
