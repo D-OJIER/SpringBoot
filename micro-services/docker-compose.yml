@@ -11,7 +11,7 @@ services:
     volumes:
       - mysql_micro_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-prootpass"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-prootpass" ]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -34,6 +34,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: rootpass
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
 
   property-service:
     build:
@@ -52,6 +53,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: rootpass
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
 
   waterconfig-service:
     build:
@@ -71,6 +73,7 @@ services:
       DB_PASSWORD: rootpass
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
       PROPERTY_SERVICE_URL: http://property-service:8082
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
 
   telemetry-service:
     build:
@@ -92,6 +95,7 @@ services:
       PROPERTY_SERVICE_URL: http://property-service:8082
       WATERCONFIG_SERVICE_URL: http://waterconfig-service:8083
       AUTH_SERVICE_URL: http://auth-service:8081
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
 
   reporting-service:
     build:
@@ -109,6 +113,28 @@ services:
       JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
       TELEMETRY_SERVICE_URL: http://telemetry-service:8084
       AUTH_SERVICE_URL: http://auth-service:8081
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+
+  discovery-service:
+    build:
+      context: .
+      dockerfile: discovery-service/Dockerfile
+    container_name: discovery_service
+    ports:
+      - "8089:8089"
+
+  gateway-service:
+    build:
+      context: .
+      dockerfile: gateway-service/Dockerfile
+    container_name: gateway_service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - discovery-service
+    environment:
+      EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+      JWT_SECRET: 849864a7cc912ad511ed4f19569c1dc3e1b4519bb81059882cea44f51787c7aa
 
 volumes:
   mysql_micro_data:

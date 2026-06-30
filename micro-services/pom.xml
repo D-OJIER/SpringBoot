@@ -16,6 +16,8 @@
         <module>waterconfig-service</module>
         <module>telemetry-service</module>
         <module>reporting-service</module>
+        <module>gateway-service</module> 
+        <module>discovery-service</module> 
     </modules>
 
     <properties>
