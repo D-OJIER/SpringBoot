@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
   @PostMapping
+  @PreAuthorize("hasRole('ADMIN')")
   public UserResponse createResident(@Valid @RequestBody UserCreateRequest request) {
     if (userRepository.existsByUsername(request.getUsername())) {
       throw new ApiException.ConflictException("Username already exists");
@@ -50,6 +50,7 @@ public class UserController {
   }
 
   @GetMapping
+  @PreAuthorize("hasRole('ADMIN')")
   public List<UserResponse> getAllUsers() {
     return userRepository.findAll().stream()
         .map(this::toResponse)
@@ -66,6 +67,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ADMIN')")
   public UserResponse getUserById(@PathVariable Long id) {
     return userRepository
         .findById(id)

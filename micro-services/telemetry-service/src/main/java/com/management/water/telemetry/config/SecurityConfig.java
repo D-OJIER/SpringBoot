@@ -31,14 +31,16 @@ public class SecurityConfig {
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
-            auth ->
-                auth
-                    // Public endpoints (Actuator + health checks)
-                    .requestMatchers("/actuator/**").permitAll()
-                    // Allow OPTIONS pre-flight requests
-                    .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-                    // All other operations are secured
-                    .anyRequest().authenticated())
+            auth -> auth
+                // Public endpoints (Actuator + health checks)
+                .requestMatchers("/actuator/**").permitAll()
+                // Allow OPTIONS pre-flight requests
+                .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+                // Internal-only endpoints: called by reporting-service via Feign.
+                // NOT exposed externally (gateway routes /dashboard/** to reporting-service).
+                .requestMatchers("/dashboard/**", "/monthly-summary/**").permitAll()
+                // All other operations are secured
+                .anyRequest().authenticated())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();

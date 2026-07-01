@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,13 +17,13 @@ public interface TelemetryServiceClient {
   Map<String, Object> getStats(
       @RequestHeader("Authorization") String authorizationHeader,
       @RequestParam(name = "apartmentNumber", required = false) String apartmentNumber,
-      @RequestParam(name = "fromDate", required = false) LocalDate fromDate,
-      @RequestParam(name = "toDate", required = false) LocalDate toDate);
+      @RequestParam(name = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+      @RequestParam(name = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate);
 
   @GetMapping("/monthly-summary")
   List<Map<String, Object>> getSummary(
       @RequestHeader("Authorization") String authorizationHeader,
       @RequestParam(name = "apartmentNumber", required = false) String apartmentNumber,
-      @RequestParam(name = "fromDate", required = false) LocalDate fromDate,
-      @RequestParam(name = "toDate", required = false) LocalDate toDate);
+      @RequestParam(name = "fromDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+      @RequestParam(name = "toDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate);
 }

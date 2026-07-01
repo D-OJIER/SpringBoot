@@ -149,42 +149,41 @@ services:
       - "8091:8084"
     depends_on:
       - gateway-service
+  # prometheus:
+  #   image: prom/prometheus:v2.50.1
+  #   container_name: prometheus
+  #   volumes:
+  #     - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - "9090:9090"
+  #   restart: unless-stopped
 
-  prometheus:
-    image: prom/prometheus:v2.50.1
-    container_name: prometheus
-    volumes:
-      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
-    restart: unless-stopped
+  # grafana:
+  #   image: grafana/grafana:10.4.1
+  #   container_name: grafana
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - GF_SECURITY_ADMIN_USER=admin
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin
+  #     - GF_USERS_ALLOW_SIGN_UP=false
+  #   volumes:
+  #     - ./docker/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+  #     - ./docker/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+  #     - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
+  #   restart: unless-stopped
 
-  grafana:
-    image: grafana/grafana:10.4.1
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
-    volumes:
-      - ./docker/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./docker/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
-    restart: unless-stopped
-
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: unless-stopped
-    user: "0"
-    ports:
-      - "9000:9000"
-      - "9443:9443"
-    volumes:
-      - /run/user/1000/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+  # portainer:
+  #   image: portainer/portainer-ce:latest
+  #   container_name: portainer
+  #   restart: unless-stopped
+  #   user: "0"
+  #   ports:
+  #     - "9000:9000"
+  #     - "9443:9443"
+  #   volumes:
+  #     - /run/user/1000/docker.sock:/var/run/docker.sock
+  #     - portainer_data:/data
 
 volumes:
   mysql_micro_data:
