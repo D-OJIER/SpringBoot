@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2" author="alfred">
+        <insert tableName="daily_log">
+            <column name="id" valueNumeric="1"/>
+            <column name="log_date" valueDate="2026-04-01"/>
+            <column name="total_litres_consumed" valueNumeric="900"/>
+            <column name="guest_count" valueNumeric="1"/>
+            <column name="day_cost" valueNumeric="0"/>
+            <column name="apartment_id" valueNumeric="1"/>
+            <column name="apartment_number" value="A-101"/>
+        </insert>
+        <insert tableName="daily_log">
+            <column name="id" valueNumeric="2"/>
+            <column name="log_date" valueDate="2026-04-02"/>
+            <column name="total_litres_consumed" valueNumeric="1500"/>
+            <column name="guest_count" valueNumeric="3"/>
+            <column name="day_cost" valueNumeric="0"/>
+            <column name="apartment_id" valueNumeric="1"/>
+            <column name="apartment_number" value="A-101"/>
+        </insert>
+        <insert tableName="daily_log">
+            <column name="id" valueNumeric="3"/>
+            <column name="log_date" valueDate="2026-04-01"/>
+            <column name="total_litres_consumed" valueNumeric="1200"/>
+            <column name="guest_count" valueNumeric="0"/>
+            <column name="day_cost" valueNumeric="0"/>
+            <column name="apartment_id" valueNumeric="2"/>
+            <column name="apartment_number" value="A-102"/>
+        </insert>
+        <insert tableName="daily_log">
+            <column name="id" valueNumeric="4"/>
+            <column name="log_date" valueDate="2026-04-02"/>
+            <column name="total_litres_consumed" valueNumeric="2200"/>
+            <column name="guest_count" valueNumeric="2"/>
+            <column name="day_cost" valueNumeric="0"/>
+            <column name="apartment_id" valueNumeric="2"/>
+            <column name="apartment_number" value="A-102"/>
+        </insert>
+        <insert tableName="daily_log">
+            <column name="id" valueNumeric="5"/>
+            <column name="log_date" valueDate="2026-04-01"/>
+            <column name="total_litres_consumed" valueNumeric="300"/>
+            <column name="guest_count" valueNumeric="0"/>
+            <column name="day_cost" valueNumeric="0"/>
+            <column name="apartment_id" valueNumeric="3"/>
+            <column name="apartment_number" value="B-201"/>
+        </insert>
+        <insert tableName="daily_log">
+            <column name="id" valueNumeric="6"/>
+            <column name="log_date" valueDate="2026-04-01"/>
+            <column name="total_litres_consumed" valueNumeric="2500"/>
+            <column name="guest_count" valueNumeric="5"/>
+            <column name="day_cost" valueNumeric="0"/>
+            <column name="apartment_id" valueNumeric="4"/>
+            <column name="apartment_number" value="C-301"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="daily_log">
+                <where>id IN (1, 2, 3, 4, 5, 6)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

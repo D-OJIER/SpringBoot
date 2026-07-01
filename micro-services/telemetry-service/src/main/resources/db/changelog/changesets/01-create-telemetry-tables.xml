@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="alfred">
+        <!-- 1. Create daily_log -->
+        <createTable tableName="daily_log">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="log_date" type="date"/>
+            <column name="total_litres_consumed" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="guest_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="day_cost" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment_id" type="bigint"/>
+            <column name="apartment_number" type="varchar(255)"/>
+        </createTable>
+
+        <!-- 2. Create Indexes on daily_log -->
+        <createIndex indexName="idx_daily_log_date" tableName="daily_log">
+            <column name="log_date"/>
+        </createIndex>
+        <createIndex indexName="idx_daily_log_apartment_date" tableName="daily_log">
+            <column name="apartment_id"/>
+            <column name="log_date"/>
+        </createIndex>
+
+        <!-- 3. Create daily_log_source_breakdown -->
+        <createTable tableName="daily_log_source_breakdown">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="litres" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="daily_log_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+        </createTable>
+
+        <!-- 4. Add Foreign Key Constraint -->
+        <addForeignKeyConstraint 
+            baseColumnNames="daily_log_id"
+            baseTableName="daily_log_source_breakdown"
+            constraintName="fk_dlsb_daily_log"
+            referencedColumnNames="id"
+            referencedTableName="daily_log"/>
+
+        <!-- 5. Create slab_monthly_summary -->
+        <createTable tableName="slab_monthly_summary">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="year" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="month" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_litres" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_cost" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="slab_monthly_summary"/>
+            <dropTable tableName="daily_log_source_breakdown"/>
+            <dropTable tableName="daily_log"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

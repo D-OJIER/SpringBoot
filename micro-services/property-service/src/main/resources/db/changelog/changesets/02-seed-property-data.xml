@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2" author="alfred">
+        <!-- Seed blocks -->
+        <insert tableName="block">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Azure Heights"/>
+        </insert>
+        <insert tableName="block">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Crimson Towers"/>
+        </insert>
+        <insert tableName="block">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Emerald Residency"/>
+        </insert>
+
+        <!-- Seed apartment types -->
+        <insert tableName="apartment_type">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Studio"/>
+            <column name="base_occupancy" valueNumeric="1"/>
+            <column name="litres_per_person" valueNumeric="100"/>
+        </insert>
+        <insert tableName="apartment_type">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="2BHK"/>
+            <column name="base_occupancy" valueNumeric="4"/>
+            <column name="litres_per_person" valueNumeric="135"/>
+        </insert>
+        <insert tableName="apartment_type">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="3BHK"/>
+            <column name="base_occupancy" valueNumeric="5"/>
+            <column name="litres_per_person" valueNumeric="155"/>
+        </insert>
+        <insert tableName="apartment_type">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Penthouse"/>
+            <column name="base_occupancy" valueNumeric="7"/>
+            <column name="litres_per_person" valueNumeric="200"/>
+        </insert>
+
+        <!-- Seed apartments -->
+        <insert tableName="apartment">
+            <column name="id" valueNumeric="1"/>
+            <column name="number" value="A-101"/>
+            <column name="block_id" valueNumeric="1"/>
+            <column name="type_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="apartment">
+            <column name="id" valueNumeric="2"/>
+            <column name="number" value="A-102"/>
+            <column name="block_id" valueNumeric="1"/>
+            <column name="type_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="apartment">
+            <column name="id" valueNumeric="3"/>
+            <column name="number" value="B-201"/>
+            <column name="block_id" valueNumeric="2"/>
+            <column name="type_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="apartment">
+            <column name="id" valueNumeric="4"/>
+            <column name="number" value="C-301"/>
+            <column name="block_id" valueNumeric="3"/>
+            <column name="type_id" valueNumeric="4"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="apartment">
+                <where>id IN (1, 2, 3, 4)</where>
+            </delete>
+            <delete tableName="apartment_type">
+                <where>id IN (1, 2, 3, 4)</where>
+            </delete>
+            <delete tableName="block">
+                <where>id IN (1, 2, 3)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

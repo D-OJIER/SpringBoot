@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2" author="alfred">
+        <!-- Seed water sources -->
+        <insert tableName="water_source">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="City Water"/>
+            <column name="pricing_type" value="SLAB"/>
+            <column name="supply_type" value="MUNICIPAL"/>
+        </insert>
+        <insert tableName="water_source">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Tanker"/>
+            <column name="pricing_type" value="SLAB"/>
+            <column name="supply_type" value="PRIVATE"/>
+        </insert>
+        <insert tableName="water_source">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Borewell"/>
+            <column name="pricing_type" value="SLAB"/>
+            <column name="supply_type" value="GROUND"/>
+        </insert>
+
+        <!-- Seed water rates (City) -->
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="1"/>
+            <column name="min_litres" valueNumeric="0"/>
+            <column name="max_litres" valueNumeric="500"/>
+            <column name="rate_per_litre" valueNumeric="1"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="2"/>
+            <column name="min_litres" valueNumeric="501"/>
+            <column name="max_litres" valueNumeric="1000"/>
+            <column name="rate_per_litre" valueNumeric="2"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="3"/>
+            <column name="min_litres" valueNumeric="1001"/>
+            <column name="max_litres" valueNumeric="999999"/>
+            <column name="rate_per_litre" valueNumeric="4"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="1"/>
+        </insert>
+
+        <!-- Seed water rates (Tanker) -->
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="4"/>
+            <column name="min_litres" valueNumeric="0"/>
+            <column name="max_litres" valueNumeric="500"/>
+            <column name="rate_per_litre" valueNumeric="5"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="5"/>
+            <column name="min_litres" valueNumeric="501"/>
+            <column name="max_litres" valueNumeric="1000"/>
+            <column name="rate_per_litre" valueNumeric="7"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="6"/>
+            <column name="min_litres" valueNumeric="1001"/>
+            <column name="max_litres" valueNumeric="999999"/>
+            <column name="rate_per_litre" valueNumeric="10"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="2"/>
+        </insert>
+
+        <!-- Seed water rates (Borewell) -->
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="7"/>
+            <column name="min_litres" valueNumeric="0"/>
+            <column name="max_litres" valueNumeric="500"/>
+            <column name="rate_per_litre" valueNumeric="2"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="8"/>
+            <column name="min_litres" valueNumeric="501"/>
+            <column name="max_litres" valueNumeric="1000"/>
+            <column name="rate_per_litre" valueNumeric="3"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="water_rate">
+            <column name="id" valueNumeric="9"/>
+            <column name="min_litres" valueNumeric="1001"/>
+            <column name="max_litres" valueNumeric="5555555"/>
+            <column name="rate_per_litre" valueNumeric="5"/>
+            <column name="effective_from" valueDate="2026-01-01"/>
+            <column name="effective_to" valueDate="2026-12-31"/>
+            <column name="source_id" valueNumeric="3"/>
+        </insert>
+
+        <!-- Seed apartment configs -->
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="1"/>
+            <column name="ratio_percent" valueNumeric="70"/>
+            <column name="apartment_id" valueNumeric="1"/>
+            <column name="source_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="2"/>
+            <column name="ratio_percent" valueNumeric="30"/>
+            <column name="apartment_id" valueNumeric="1"/>
+            <column name="source_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="3"/>
+            <column name="ratio_percent" valueNumeric="50"/>
+            <column name="apartment_id" valueNumeric="2"/>
+            <column name="source_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="4"/>
+            <column name="ratio_percent" valueNumeric="50"/>
+            <column name="apartment_id" valueNumeric="2"/>
+            <column name="source_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="5"/>
+            <column name="ratio_percent" valueNumeric="100"/>
+            <column name="apartment_id" valueNumeric="3"/>
+            <column name="source_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="6"/>
+            <column name="ratio_percent" valueNumeric="60"/>
+            <column name="apartment_id" valueNumeric="4"/>
+            <column name="source_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="apartment_source_config">
+            <column name="id" valueNumeric="7"/>
+            <column name="ratio_percent" valueNumeric="40"/>
+            <column name="apartment_id" valueNumeric="4"/>
+            <column name="source_id" valueNumeric="2"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="apartment_source_config">
+                <where>id IN (1,2,3,4,5,6,7)</where>
+            </delete>
+            <delete tableName="water_rate">
+                <where>id IN (1,2,3,4,5,6,7,8,9)</where>
+            </delete>
+            <delete tableName="water_source">
+                <where>id IN (1,2,3)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

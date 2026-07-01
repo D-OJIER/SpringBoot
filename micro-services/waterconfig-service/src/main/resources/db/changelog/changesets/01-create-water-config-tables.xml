@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="alfred">
+        <createTable tableName="water_source">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pricing_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="supply_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="water_rate">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="min_litres" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_litres" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rate_per_litre" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="effective_from" type="date"/>
+            <column name="effective_to" type="date"/>
+            <column name="source_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="apartment_source_config">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ratio_percent" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint 
+            baseColumnNames="source_id"
+            baseTableName="water_rate"
+            constraintName="fk_water_rate_source"
+            referencedColumnNames="id"
+            referencedTableName="water_source"/>
+
+        <addForeignKeyConstraint 
+            baseColumnNames="source_id"
+            baseTableName="apartment_source_config"
+            constraintName="fk_asc_source"
+            referencedColumnNames="id"
+            referencedTableName="water_source"/>
+
+        <rollback>
+            <dropTable tableName="apartment_source_config"/>
+            <dropTable tableName="water_rate"/>
+            <dropTable tableName="water_source"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
