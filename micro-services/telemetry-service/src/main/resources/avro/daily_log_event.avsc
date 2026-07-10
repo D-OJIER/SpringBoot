@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "DailyLogAvroEvent",
+  "namespace": "com.management.water.telemetry.avro",
+  "fields": [
+    {"name": "logDate", "type": "string"},
+    {"name": "totalLitresConsumed", "type": "double"},
+    {"name": "guestCount", "type": "int"},
+    {"name": "apartmentId", "type": "long"}
+  ]
+}
