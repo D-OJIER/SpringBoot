@@ -178,7 +178,7 @@ public class DailyLogService {
     DateRange dateRange = resolveDateRange(fromDate, toDate);
 
     List<String> allowedSortFields = List.of("logDate", "totalLitresConsumed", "dayCost", "guestCount");
-    String effectiveSortBy = allowedSortFields.contains(sortBy) ? sortBy : "logDate";
+    String effectiveSortBy = (sortBy != null && allowedSortFields.contains(sortBy)) ? sortBy : "logDate";
     Sort.Direction direction = "ASC".equalsIgnoreCase(sortDir) ? Sort.Direction.ASC : Sort.Direction.DESC;
 
     Pageable pageable =

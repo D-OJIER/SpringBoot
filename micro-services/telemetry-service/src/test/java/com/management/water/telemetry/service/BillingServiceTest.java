@@ -6,6 +6,7 @@ import com.management.water.telemetry.dto.WaterRateDto;
 import com.management.water.telemetry.dto.WaterSourceDto;
 import com.management.water.telemetry.entity.DailyLog;
 import com.management.water.telemetry.repository.DailyLogSourceBreakdownRepository;
+import com.management.water.telemetry.exception.ApiException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -84,5 +86,23 @@ public class BillingServiceTest {
         // Normal: 200 * 5.0 = 1000.0
         // Excess: 100 * 7.5 = 750.0
         assertEquals(1750.0, cost, 0.01);
+    }
+
+    @Test
+    public void testCalculateDailyCost_NoRatesFound() {
+        when(waterconfigClient.getConfigsByApartmentId(100L)).thenReturn(Arrays.asList(configDto));
+        when(waterconfigClient.getRatesBySourceAndDate(eq(1L), any(LocalDate.class)))
+                .thenReturn(java.util.Collections.emptyList());
+
+        assertThrows(ApiException.class, () -> billingService.calculateDailyCost(log, 200.0));
+    }
+
+    @Test
+    public void testCalculateDailyCost_NoConfigsFound() {
+        when(waterconfigClient.getConfigsByApartmentId(100L)).thenReturn(java.util.Collections.emptyList());
+
+        double cost = billingService.calculateDailyCost(log, 200.0);
+
+        assertEquals(0.0, cost, 0.01);
     }
 }

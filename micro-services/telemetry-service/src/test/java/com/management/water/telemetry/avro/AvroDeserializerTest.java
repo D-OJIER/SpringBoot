@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AvroDeserializerTest {
 
@@ -38,5 +37,19 @@ public class AvroDeserializerTest {
         assertEquals(2, deserializedEvent.getGuestCount());
         assertEquals("2026-07-10", deserializedEvent.getLogDate().toString());
         assertEquals(350.0, deserializedEvent.getTotalLitresConsumed());
+    }
+
+    @Test
+    public void testDeserialize_NullData() {
+        AvroDeserializer<DailyLogAvroEvent> deserializer = new AvroDeserializer<>(DailyLogAvroEvent.class);
+        DailyLogAvroEvent result = deserializer.deserialize("test-topic", null);
+        assertNull(result);
+    }
+
+    @Test
+    public void testDeserialize_Failure() {
+        AvroDeserializer<DailyLogAvroEvent> deserializer = new AvroDeserializer<>(DailyLogAvroEvent.class);
+        byte[] badData = new byte[]{1, 2, 3, 4};
+        assertThrows(RuntimeException.class, () -> deserializer.deserialize("test-topic", badData));
     }
 }
