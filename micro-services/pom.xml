@@ -27,6 +27,9 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.parameters>true</maven.compiler.parameters>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.projectKey>water-management-system</sonar.projectKey>
+        <sonar.projectName>Water Management System</sonar.projectName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
