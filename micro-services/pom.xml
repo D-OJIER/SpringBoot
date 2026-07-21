@@ -24,6 +24,7 @@
         <java.version>17</java.version>
         <spring-boot.version>3.4.7</spring-boot.version>
         <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <springdoc.version>2.8.5</springdoc.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -50,6 +51,12 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- SpringDoc OpenAPI -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -90,29 +97,27 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.2.5</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.11</version>
+                    <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

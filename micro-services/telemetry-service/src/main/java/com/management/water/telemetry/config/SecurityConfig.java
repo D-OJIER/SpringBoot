@@ -34,6 +34,7 @@ public class SecurityConfig {
             auth -> auth
                 // Public endpoints (Actuator + health checks)
                 .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 // Allow OPTIONS pre-flight requests
                 .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 // Internal-only endpoints: called by reporting-service via Feign.

@@ -35,6 +35,7 @@ public class SecurityConfig {
                 auth
                     // Public endpoints (Actuator + health checks)
                     .requestMatchers("/actuator/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     // Allow OPTIONS pre-flight requests
                     .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                     // All other operations are secured

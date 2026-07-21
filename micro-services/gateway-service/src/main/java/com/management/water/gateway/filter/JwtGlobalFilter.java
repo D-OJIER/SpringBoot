@@ -92,6 +92,9 @@ public class JwtGlobalFilter implements GlobalFilter, Ordered {
     }
 
     private boolean isPublicEndpoint(String path) {
+        if (path.contains("/v3/api-docs") || path.contains("/swagger-ui") || path.contains("/webjars")) {
+            return true;
+        }
         return PUBLIC_ENDPOINTS.stream()
                 .anyMatch(endpoint -> path.startsWith(endpoint));
     }

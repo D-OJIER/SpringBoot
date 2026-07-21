@@ -36,6 +36,7 @@ public class SecurityConfig {
                     // Public endpoints
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/actuator/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     // Everything else requires a valid JWT
                     .anyRequest().authenticated())
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
