@@ -6,6 +6,9 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="2" author="alfred">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM daily_log</sqlCheck>
+        </preConditions>
         <insert tableName="daily_log">
             <column name="id" valueNumeric="1"/>
             <column name="log_date" valueDate="2026-04-01"/>

@@ -38,6 +38,8 @@ function WaterRatesPage() {
         {
           ...rate,
 
+          sourceId: rate.source?.id || rate.sourceId,
+
           minLitres: Number(editForm.minLitres),
 
           maxLitres: Number(editForm.maxLitres),

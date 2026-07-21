@@ -1,5 +1,6 @@
 package com.management.water.waterconfig.service;
 
+import com.management.water.waterconfig.dto.event.WaterConfigEvent;
 import com.management.water.waterconfig.entity.WaterRate;
 import com.management.water.waterconfig.entity.WaterSource;
 import com.management.water.waterconfig.exception.ApiException;
@@ -9,15 +10,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class WaterRateService {
 
   private final WaterRateRepository rateRepository;
   private final WaterSourceRepository sourceRepository;
+  private final KafkaTemplate<String, WaterConfigEvent> kafkaTemplate;
+
+  @Value("${app.kafka.topics.water-config:water-config-events}")
+  private String topicName;
 
   public WaterRate create(WaterRate rate) {
     WaterSource source =
@@ -46,7 +55,9 @@ public class WaterRateService {
 
     validateSlabs(source.getId(), rate);
 
-    return rateRepository.save(rate);
+    WaterRate saved = rateRepository.save(rate);
+    publishEvent("RATE_CREATED", saved.getId(), saved.getSource().getId(), null);
+    return saved;
   }
 
   private void validateSlabs(Long sourceId, WaterRate candidate) {
@@ -86,7 +97,9 @@ public class WaterRateService {
       throw new ApiException(HttpStatus.BAD_REQUEST, "Cannot delete historical rates");
     }
 
+    Long sourceId = rate.getSource() != null ? rate.getSource().getId() : null;
     rateRepository.deleteById(id);
+    publishEvent("RATE_DELETED", id, sourceId, null);
   }
 
   public List<WaterRate> getAll() {
@@ -147,8 +160,29 @@ public class WaterRateService {
     existing.setMinLitres(updated.getMinLitres());
     existing.setMaxLitres(updated.getMaxLitres());
     existing.setRatePerLitre(updated.getRatePerLitre());
+    existing.setEffectiveFrom(updated.getEffectiveFrom());
+    existing.setEffectiveTo(updated.getEffectiveTo());
     existing.setSource(source);
 
-    return rateRepository.save(existing);
+    WaterRate saved = rateRepository.save(existing);
+    publishEvent("RATE_UPDATED", saved.getId(), saved.getSource().getId(), null);
+    return saved;
+  }
+
+  private void publishEvent(String eventType, Long entityId, Long sourceId, Long apartmentId) {
+    try {
+      WaterConfigEvent event = WaterConfigEvent.builder()
+          .eventType(eventType)
+          .entityType("WATER_RATE")
+          .entityId(entityId)
+          .sourceId(sourceId)
+          .apartmentId(apartmentId)
+          .build();
+      kafkaTemplate.send(topicName, String.valueOf(sourceId), event);
+      log.info("Published WaterConfigEvent [{}] to Kafka topic {}", eventType, topicName);
+    } catch (Exception e) {
+      log.error("Failed to publish WaterConfigEvent to Kafka: {}", e.getMessage(), e);
+    }
   }
 }
+

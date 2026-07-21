@@ -50,6 +50,8 @@ function AddWaterRateForm({ onSuccess }) {
 
         effectiveTo: formData.effectiveTo,
 
+        sourceId: Number(formData.sourceId),
+
         source: {
           id: Number(formData.sourceId),
         },

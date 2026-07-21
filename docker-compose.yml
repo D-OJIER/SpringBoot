@@ -96,6 +96,10 @@ services:
       WATERCONFIG_SERVICE_URL: http://waterconfig-service:8083
       AUTH_SERVICE_URL: http://auth-service:8081
       EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      IBM_MQ_CONNNAME: ibmmq(1414)
+      SFTP_HOST: sftp
+      SFTP_PORT: 22
 
   reporting-service:
     build:
@@ -114,6 +118,8 @@ services:
       TELEMETRY_SERVICE_URL: http://telemetry-service:8084
       AUTH_SERVICE_URL: http://auth-service:8081
       EUREKA_SERVER_URL: http://discovery-service:8089/eureka/
+      KAFKA_SERVERS: kafka:29092
+
 
   discovery-service:
     build:

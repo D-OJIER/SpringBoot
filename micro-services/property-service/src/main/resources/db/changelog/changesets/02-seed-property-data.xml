@@ -6,6 +6,9 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="2" author="alfred">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM block</sqlCheck>
+        </preConditions>
         <!-- Seed blocks -->
         <insert tableName="block">
             <column name="id" valueNumeric="1"/>
